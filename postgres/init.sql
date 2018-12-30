@@ -1,0 +1,3 @@
+CREATE USER postgres;
+CREATE DATABASE inventory;
+GRANT ALL PRIVILEGES ON DATABASE inventory TO postgres;
