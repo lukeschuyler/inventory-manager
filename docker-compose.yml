@@ -1,7 +1,9 @@
 version: '3'
 services:
-  mysql:
-    image: 'mysql:latest'
+  postgres:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./postgres
   nginx:
     restart: always
     build:
@@ -17,11 +19,11 @@ services:
       - /app/node_modules
       - ./api:/app
     environment:
-      - MYSQL_USER=mysql
-      - MYSQL_PASSWORD=mysql_password
-      - MYSQLHOST=mysql
-      - MYSQL_DATABASE=inventory
-      - MYSQLPORT=3306
+      - PGUSER=postgres
+      - PGHOST=postgres
+      - PGDB=inventory
+      - PGPASSWORD=postgres_password
+      - PGPORT=5432
   client:
     build:
       dockerfile: Dockerfile.dev

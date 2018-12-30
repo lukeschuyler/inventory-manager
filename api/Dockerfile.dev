@@ -1,5 +1,9 @@
-FROM node:alpine
+FROM node:alpine AS assets
 WORKDIR '/app'
+
+# Install yarn and other dependencies via apk
+RUN apk update && apk add yarn python g++ make && rm -rf /var/cache/apk/* && npm install -g knex
+
 COPY ./package.json ./
 RUN npm install
 COPY . .
