@@ -1,8 +1,7 @@
-'use strict'
+const { bookshelf } = require('../db/database');
 
-const { bookshelf } = require('../db/database')
-require('./waste_line_item')
-require('./product')
+require('./waste_line_item');
+require('./product');
 
 const WasteSession = bookshelf.Model.extend({
   tableName: 'waste_session',
@@ -11,13 +10,13 @@ const WasteSession = bookshelf.Model.extend({
 }, {
   getAll() {
     return this.forge()
-    .fetchAll({withRelated: ['product'], require: true})
+    .fetchAll({withRelated: ['products'], require: true})
     .then(sessions => sessions)
     .catch(error => error)
   },
   getOne(id) {
     return this.forge({id})
-    .fetch({withRelated: ['product', 'items'], require: true})
+    .fetch({withRelated: ['products', 'items'], require: true})
     .then(session => session)
     .catch(error => error)
   },

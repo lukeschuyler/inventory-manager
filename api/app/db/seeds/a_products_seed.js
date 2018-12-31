@@ -1,8 +1,8 @@
 exports.seed = (knex, Promise) => {
-  return knex('products').del() 
+  return knex('product').del() 
     .then(() => { 
       return Promise.all([
-        knex('products').insert({
+        knex('product').insert({
           upc_code: 099428829940,
           name: 'Coffee Filters',
           measure: 'QTY',
@@ -14,7 +14,7 @@ exports.seed = (knex, Promise) => {
           stock: 'out',
           active: 'n'
         }),
-        knex('products').insert({
+        knex('product').insert({
           upc_code: 099428829943,
           name: 'Coffee',
           measure: 'QTY',
@@ -26,7 +26,7 @@ exports.seed = (knex, Promise) => {
           stock: 'in',
           active: 'y'
         }),
-        knex('products').insert({
+        knex('product').insert({
           upc_code: 099428829944,
           name: 'Blue Cheese',
           measure: 'LB',
@@ -38,7 +38,7 @@ exports.seed = (knex, Promise) => {
           stock: 'in',
           active: 'y'
         }),
-        knex('products').insert({
+        knex('product').insert({
           upc_code: 099428829945,
           name: 'Gallon Whole Milk',
           measure: 'QTY',
@@ -50,7 +50,7 @@ exports.seed = (knex, Promise) => {
           stock: 'in',
           active: 'y'
         }),
-        knex('products').insert({
+        knex('product').insert({
           upc_code: 099428829946,
           name: 'Cauliflower',
           measure: 'LB',
@@ -62,7 +62,7 @@ exports.seed = (knex, Promise) => {
           stock: 'in',
           active: 'y'
         }),
-        knex('products').insert({
+        knex('product').insert({
           upc_code: 47495112900,
           name: 'Fig Bar',
           measure: 'QTY',

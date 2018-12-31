@@ -1,27 +1,27 @@
 const express = require('express');
 const { json, urlencoded } = require('body-parser');
-// const routes = require('./app/routes/');
 const cors = require('cors')
 
+// look for index.js in routes dir
+const routes = require('./app/routes/');
 const app = express();
 
 app.use(cors());
 app.use(json());
 app.use(urlencoded({ extended: false }));
 
-// app.use('/', routes);
+// ROUTES
+app.use('/', routes);
 
-app.get('/', (req, res) => res.send('Hi'))
-
+// NOT FOUND
 app.use((req, res, next) => {
   const err = new Error('404 Not Found');
   err.status = 404;
   next(err);
 });
 
-if(app.get('env') === 'development') {
+if (app.get('env') === 'development') {
   app.use( (err, req, res, next) => {
-    console.log("development error", err);
     res.status(err.status || 500);
     res.json({
       message: err.message,

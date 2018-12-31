@@ -1,20 +1,20 @@
 exports.seed = (knex, Promise) => {
-  return knex('sales_sessions').del() 
+  return knex('sales_session').del() 
     .then(() => { 
       return Promise.all([
-        knex('sales_sessions').insert({
+        knex('sales_session').insert({
           username: "frippertron"
         }),
-        knex('sales_sessions').insert({
+        knex('sales_session').insert({
           username: "shawn123"
         }),
-        knex('sales_sessions').insert({
+        knex('sales_session').insert({
           username: "jamiethomas"
         }),
-        knex('sales_sessions').insert({
+        knex('sales_session').insert({
           username: "dsurrett"
         }),
-        knex('sales_sessions').insert({
+        knex('sales_session').insert({
           username: "dsurrett"
         })
       ]);
