@@ -85,7 +85,7 @@ exports.up = (knex, Promise) => {
 };
 
 exports.down = (knex, Promise) => knex.schema
-  .dropTable('token')
+  .dropTable('user_token')
   .dropTable('i_session_line_item')
   .dropTable('w_session_line_item')
   .dropTable('s_session_line_item')
