@@ -1,4 +1,5 @@
 const { bookshelf } = require('../db/database');
+const bcrypt = require('bcryptjs');
 
 const User = bookshelf.Model.extend({
   tableName: 'user',
@@ -32,7 +33,20 @@ const User = bookshelf.Model.extend({
     .save(edits, {method: 'update'})
     .then(user => user)
     .catch(error => error)
+  },
+  async comparePassword(pw, hash) {
+    let match = await compare(pw, hash);
+
+    if (!match) {
+      throw new Error();
+    }
+
+    return match;
   }
 });
+
+function compare(pw, hash) {
+  return new Promise((resolve, reject) => bcrypt.compare(pw, hash, (err, res) => resolve(res))); 
+}
 
 module.exports = bookshelf.model('User', User);

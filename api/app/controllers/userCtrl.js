@@ -1,43 +1,76 @@
 const UserToken = require('../models/user_token.js');
+const User = require('../models/user.js');
 
 module.exports.getAll = (req, res, next) => {
-  returnSalesLineItem.getAll()
-  .then(items => res.status(200).json(items))
+  User.getAll()
+  .then(users => res.status(200).json(users))
   .catch(error => next(error))
 }
 
-module.exports.getAllBySession = ({ params: {sales_session_id} }, res, next) => {
-  SalesLineItem.getAllBySession(sales_session_id)
-  .then(items => res.status(200).json(items))
+module.exports.getOne = ({ params: { id } }, res, next) => {
+  User.getOne(id)
+  .then(user => res.status(200).json(user))
   .catch(error => next(error))
 }
 
-module.exports.getOne = ({ params: {id} }, res, next) => {
-  SalesLineItem.getOne(id)
-  .then(item => res.status(200).json(item))
+module.exports.deleteUser = ({ params: {id} }, res, next) => {
+  User.deleteUser(id)
+  .then(user => res.status(202).json(user))
   .catch(error => next(error))
 }
 
-module.exports.addItem = ({body}, res, next) => {
-  let newQuantity = body.qty - body.lineItem.quantity
-  newQuantity < 0 ? newQuantity = 0 : newQuantity = newQuantity
-  SalesLineItem.addItem(body)
-  .then(res => {
-   return Product.editProduct(body.lineItem.product_id, {current_qty: newQuantity})
-  })
-  .then(item => res.status(200).json(item))
-  .catch(error => next(error))
-}
-
-module.exports.deleteItem = ({params: {id} }, res, next) => {
-  SalesLineItem.deleteItem(id)
-  .then(item => res.status(202).json(item))
-  .catch(error => next(error))
-}
-
-module.exports.editItem = ({body}, res, next) => {
+module.exports.editUser = ({ body }, res, next) => {
   const id = body.id
-  SalesLineItem.editItem(id, body)
-  .then(item => res.status(200).json(item))
+  User.editUser(id, body)
+  .then(user => res.status(200).json(user))
+  .catch(error => next(error))
+}
+
+module.exports.login = async ({ body }, res, next) => {
+  let { email, password } = body;
+
+  let user;
+  try {
+    user = await User.getOne({ email });
+  }
+  catch(e) {
+    return next(e);
+  }
+
+  if (!user) {
+    return res.status(401).json({ 
+      message: 'Invalid email or password.'
+    });
+  }
+    
+  // password check
+  try {
+    await user.comparePassword(password, user.password_hash);
+  } catch (e) {
+    console.log(e);
+    return res.status(401).json({
+      error: 2,
+      msg: 'Incorrect password.'
+    });
+  }
+  
+  const token = await crypto.randomBytes(16).toString('hex');
+
+  try {
+    // destroy all existing tokens ensuring there is only one per user at a time
+    await UserToken.destroy({ user: userRecord.id });
+
+    // create new token
+    await UserToken.create({
+      token,
+      user: userRecord.id
+    });
+
+  } catch (e) {
+    return this.res.serverError(e);
+  }
+  
+  User.addUser(user)
+  .then(session => res.status(200).json(session))
   .catch(error => next(error))
 }

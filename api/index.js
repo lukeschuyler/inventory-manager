@@ -1,12 +1,17 @@
 const express = require('express');
+const cors = require('cors');
 const { json, urlencoded } = require('body-parser');
-const cors = require('cors')
 
-// look for index.js in routes dir
+// index.js is the entry file for routes
 const routes = require('./app/routes/');
+
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  // default for now, as devlopment continues will configure
+}));
+
+// use body-parser to parse request body into json
 app.use(json());
 app.use(urlencoded({ extended: false }));
 
@@ -20,23 +25,15 @@ app.use((req, res, next) => {
   next(err);
 });
 
-if (app.get('env') === 'development') {
-  app.use( (err, req, res, next) => {
-    res.status(err.status || 500);
-    res.json({
-      message: err.message,
-      error: err
-    });
-  });
-}
-
-app.use( (err, req, res, next) => {
+// OTHER ERROR STATUSES
+app.use((err, req, res, next) => {
   res.status(err.status || 500);
   res.json({
     message: err.message,
-    error: {}
+    error: app.get('env') === 'development' ? err : {}
   });
 });
+
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
