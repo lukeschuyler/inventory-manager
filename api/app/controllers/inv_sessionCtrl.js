@@ -1,6 +1,3 @@
-'use strict'
-
-const { bookshelf } = require('../db/database')
 const InvSession = require('../models/inv_session')
 
 module.exports.getAll = (req, res, next) => {

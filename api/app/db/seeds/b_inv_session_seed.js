@@ -3,19 +3,19 @@ exports.seed = (knex, Promise) => {
     .then(() => { 
       return Promise.all([
         knex('inventory_session').insert({
-          username: "johnthomas"
+          user_id: 1
         }),
         knex('inventory_session').insert({
-          username: "stevebrownlee"
+          user_id: 2
         }),
         knex('inventory_session').insert({
-          username: "johnthomas"
+          user_id: 2
         }),
         knex('inventory_session').insert({
-          username: "mtambo"
+          user_id: 3
         }),
         knex('inventory_session').insert({
-          username: "stevebrownlee"
+          user_id: 4
         })
       ]);
     });

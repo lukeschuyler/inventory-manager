@@ -1,6 +1,3 @@
-'use strict'
-
-const { bookshelf } = require('../db/database')
 const RecLineItem = require('../models/rec_line_item')
 const Product = require('../models/product.js')
 

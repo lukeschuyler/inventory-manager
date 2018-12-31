@@ -1,6 +1,3 @@
-'use strict'
-
-const { bookshelf } = require('../db/database')
 const WasteSession = require('../models/waste_session')
 
 module.exports.getAll = (req, res, next) => {

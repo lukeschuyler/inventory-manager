@@ -1,5 +1,4 @@
-const { bookshelf } = require('../db/database')
-const InvLineItem = require('../models/inv_line_item')
+const InvLineItem = require('../models/inv_line_item');
 
 module.exports.getAll = (req, res, next) => {
   InvLineItem.getAll()

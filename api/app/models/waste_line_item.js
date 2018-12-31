@@ -1,8 +1,6 @@
-'use strict'
-
-const { bookshelf } = require('../db/database')
-require('./product')
-require('./waste_session')
+const { bookshelf } = require('../db/database');
+require('./product');
+require('./waste_session');
 
 const WasteLineItem = bookshelf.Model.extend({
   tableName: 'w_session_line_item',
@@ -47,4 +45,4 @@ const WasteLineItem = bookshelf.Model.extend({
   }
 })
 
-module.exports = bookshelf.model('WasteLineItem', WasteLineItem)
+module.exports = bookshelf.model('WasteLineItem', WasteLineItem);

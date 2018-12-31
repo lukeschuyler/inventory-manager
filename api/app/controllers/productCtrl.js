@@ -1,6 +1,3 @@
-'use strict'
-
-const { bookshelf } = require('../db/database')
 const Product = require('../models/product')
 
 module.exports.getAll = (req, res, next) => {

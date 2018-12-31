@@ -1,6 +1,5 @@
 'use strict';
 
-const { bookshelf } = require('../db/database');
 const SalesSession = require('../models/sales_session');
 
 module.exports.getAll = (req, res, next) => {

@@ -1,9 +1,13 @@
-'use strict';
+// waste endpoint functions
+const { 
+  getAll, 
+  getOne, 
+  addSession,   
+  deleteSession, 
+  editSession 
+} = require('../controllers/waste_sessionCtrl');
 
 const { Router } = require('express');
-
-const { getAll, getOne, addSession, deleteSession, editSession } = require('../controllers/waste_sessionCtrl');
-
 const router = Router();
 
 router.get('/waste_sessions', getAll);

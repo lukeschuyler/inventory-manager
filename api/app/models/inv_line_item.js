@@ -1,6 +1,6 @@
-const { bookshelf } = require('../db/database')
-require('./product')
-require('./inv_session')
+const { bookshelf } = require('../db/database');
+require('./product');
+require('./inv_session');
 
 const InvLineItem = bookshelf.Model.extend({
   tableName: 'i_session_line_item',

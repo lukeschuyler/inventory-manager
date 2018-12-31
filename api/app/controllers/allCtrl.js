@@ -1,7 +1,3 @@
-'use strict'
-
-const { bookshelf } = require('../db/database')
-
 const InvSession = require('../models/inv_session')
 const RecSession = require('../models/rec_session')
 const SalesSession = require('../models/sales_session')
