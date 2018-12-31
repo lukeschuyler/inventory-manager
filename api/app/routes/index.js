@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const router = Router();
 
-router.use(require('./user');)
+router.use(require('./user'));
 router.use(require('./inv_line_items'));
 router.use(require('./inv_sessions'));
 router.use(require('./products'));

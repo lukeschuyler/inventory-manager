@@ -28,49 +28,52 @@ module.exports.editUser = ({ body }, res, next) => {
 
 module.exports.login = async ({ body }, res, next) => {
   let { email, password } = body;
-
+  
+  // First find user based on creds provided
   let user;
   try {
-    user = await User.getOne({ email });
+    user = await User.getOneByEmail(email);
+    console.log(user);
   }
   catch(e) {
     return next(e);
   }
-
+  
+  // Respond unauthorized if not in db
   if (!user) {
     return res.status(401).json({ 
-      message: 'Invalid email or password.'
+      message: 'Invalid email and password.'
     });
   }
     
   // password check
   try {
-    await user.comparePassword(password, user.password_hash);
+    await User.comparePassword(password, user.attributes.password_hash);
   } catch (e) {
     console.log(e);
     return res.status(401).json({
       error: 2,
-      msg: 'Incorrect password.'
+      message: 'Incorrect password.'
     });
   }
   
-  const token = await crypto.randomBytes(16).toString('hex');
+  const token = await require('crypto').randomBytes(16).toString('hex');
 
   try {
     // destroy all existing tokens ensuring there is only one per user at a time
-    await UserToken.destroy({ user: userRecord.id });
+    await UserToken.destroy(user.id);
 
     // create new token
-    await UserToken.create({
-      token,
-      user: userRecord.id
-    });
+    await UserToken.create(token, user.id);
 
   } catch (e) {
-    return this.res.serverError(e);
+    return res.status(500).json({
+      error: 2,
+      message: 'Internal Server Error.'
+    });
   }
   
-  User.addUser(user)
-  .then(session => res.status(200).json(session))
-  .catch(error => next(error))
+  return res.status(200).json({
+    message: 'success'
+  })
 }

@@ -15,6 +15,12 @@ const User = bookshelf.Model.extend({
     .fetch()
     .then(user => user)
     .catch(error => error)
+  },  
+  getOneByEmail(email) {
+    return this.forge({ email })
+    .fetch()
+    .then(user => user)
+    .catch(error => error)
   },
   addUser(newUser) {
     return this.forge(newUser)
@@ -45,8 +51,12 @@ const User = bookshelf.Model.extend({
   }
 });
 
-function compare(pw, hash) {
-  return new Promise((resolve, reject) => bcrypt.compare(pw, hash, (err, res) => resolve(res))); 
+function compare(pw, hash) { 
+  return new Promise((resolve, reject) => {
+    bcrypt.compare(pw, hash, (err, res) => {
+      resolve(res);
+    });
+  }); 
 }
 
 module.exports = bookshelf.model('User', User);

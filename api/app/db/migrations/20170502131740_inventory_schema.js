@@ -13,7 +13,7 @@ exports.up = (knex, Promise) => {
   .createTable('user_token', table => {
     table.increments();
     table.string('token');
-    table.timestamp('created_at');
+    table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
     table.integer('user_id').unsigned().references('user.id');
   })
 
