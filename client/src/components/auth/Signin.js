@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
 import { compose  } from 'redux';
-import * as actions from '../../actions';
+import * as actions from '../../actions/auth';
 
 class Signin extends Component {
   onSubmit = formProps => {
@@ -15,18 +15,20 @@ class Signin extends Component {
     const { handleSubmit } = this.props;
 
     return (
-      <form onSubmit={handleSubmit(this.onSubmit)}>
-        <fieldset>
-          <label htmlFor="">Email</label>
-          <Field autoComplete="none" name="email" type="text" component="input" />
-        </fieldset>        
-        <fieldset>
-          <label htmlFor="">Password</label>
-          <Field autoComplete="none" name="password" type="password" component="input" />
-        </fieldset>
-        <div>{this.props.errorMessage}</div>
-        <button>Sign in</button>
-      </form>
+      <div>
+        <form onSubmit={handleSubmit(this.onSubmit)} className="container log-form">
+          <div className="form-group row">
+            <label htmlFor="">Email</label>
+            <Field autoComplete="none" name="email" type="text" component="input" />
+          </div>        
+          <fieldset>
+            <label htmlFor="">Password</label>
+            <Field autoComplete="none" name="password" type="password" component="input" />
+          </fieldset>
+          <div>{this.props.errorMessage}</div>
+          <button>Sign in</button>
+        </form>
+      </div>
     )
   }
 }

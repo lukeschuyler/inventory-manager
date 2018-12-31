@@ -2,34 +2,47 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import { Navbar, NavItem, MenuItem, NavDropdown, Nav } from 'react-bootstrap';
+import Headroom from 'react-headroom';
+
 class Header extends Component {
   renderLinks() {
     if (this.props.authenticated) {
       return (
         <div>
-          <Link to="/signout">Sign Out ({this.props.userId})</Link>
-          <Link to="/notes">Notes</Link>
-          <Link to="/add-note">Add Note</Link>
+          <Nav>
+            <NavItem eventKey={1} href="/sessions">Sessions</NavItem>
+          </Nav>
+          <Nav pullRight>
+            <NavItem eventKey={2} href="/products">View Products</NavItem>
+            <NavItem eventKey={2} href="/products/search">Search Products</NavItem>
+          </Nav>
         </div>
       );
     } else {
       return (
-        <div>
-          <Link to="/signup">Sign Up</Link>
-          <Link to="/signin">Sign In</Link>
-        </div>
+        <span>
+          <Nav pullRight>
+            <NavItem eventKey={2} href="/signup">Sign Up</NavItem>
+            <NavItem eventKey={2} href="/signin">Sign In</NavItem>
+          </Nav>
+        </span>
       );
     }
   }
 
   render() {
     return (
-      <div className="Header">
-        <Link to="/">Redux Auth</Link>
-        <div className="right-links">
-          {this.renderLinks()}
-        </div>
-      </div>
+      <Navbar inverse className="app-nav">
+        <Navbar.Header>
+          <Navbar.Brand>
+            <a href="/">Simply Managed</a>
+          </Navbar.Brand>
+        </Navbar.Header>
+          <div className="right-links">
+            {this.renderLinks()}
+          </div>
+      </Navbar>
     );
   }
 }

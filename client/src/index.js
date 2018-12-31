@@ -14,7 +14,7 @@ import Signout  from './components/auth/Signout';
 import Signin  from './components/auth/Signin';
 import reducers  from './reducers';
 
-import style from './index.css';
+import style from './styles/index.css';
 
 const INITIAL_APP_STATE = {
   auth: { 
