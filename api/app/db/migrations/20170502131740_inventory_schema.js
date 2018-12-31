@@ -1,7 +1,7 @@
 
 exports.up = (knex, Promise) => {
   return knex.schema
-  .createTable('products', (table) => {
+  .createTable('product', (table) => {
     table.increments();
     table.bigInteger('upc_code').unsigned().notNullable().unique();
     table.string('name').notNullable();
@@ -14,59 +14,59 @@ exports.up = (knex, Promise) => {
     table.string('stock').notNullable();
     table.string('active').notNullable();
   })
-  .createTable('inventory_sessions', (table) => {
+  .createTable('inventory_session', (table) => {
     table.increments();
     table.timestamp('date').notNullable().defaultTo(knex.fn.now())
     table.string('username')
   })
-  .createTable('i_session_line_items', (table) => {
+  .createTable('i_session_line_item', (table) => {
     table.increments()
-    table.integer('product_id').unsigned().references('products.id')
-    table.integer('inventory_session_id').unsigned().references('inventory_sessions.id')
+    table.integer('product_id').unsigned().references('product.id')
+    table.integer('inventory_session_id').unsigned().references('inventory_session.id')
     table.decimal('quantity').notNullable();
   })
-  .createTable('waste_sessions', (table) => {
+  .createTable('waste_session', (table) => {
     table.increments();
     table.timestamp('date').notNullable().defaultTo(knex.fn.now())
     table.string('username')
   })
-  .createTable('w_session_line_items', (table) => {
+  .createTable('w_session_line_item', (table) => {
     table.increments()
-    table.integer('product_id').unsigned().references('products.id')
-    table.integer('waste_session_id').unsigned().references('waste_sessions.id')
+    table.integer('product_id').unsigned().references('product.id')
+    table.integer('waste_session_id').unsigned().references('waste_session.id')
     table.decimal('quantity').notNullable();
   })
-  .createTable('sales_sessions', (table) => {
+  .createTable('sales_session', (table) => {
     table.increments();
     table.timestamp('date').notNullable().defaultTo(knex.fn.now())
     table.string('username')
   })
-  .createTable('s_session_line_items', (table) => {
+  .createTable('s_session_line_item', (table) => {
     table.increments()
-    table.integer('product_id').unsigned().references('products.id')
-    table.integer('sales_session_id').unsigned().references('sales_sessions.id')
+    table.integer('product_id').unsigned().references('product.id')
+    table.integer('sales_session_id').unsigned().references('sales_session.id')
     table.decimal('quantity').notNullable();
   })
-  .createTable('receiving_sessions', (table) => {
+  .createTable('receiving_session', (table) => {
     table.increments();
     table.timestamp('date').notNullable().defaultTo(knex.fn.now())
     table.string('username')
   })
-  .createTable('r_session_line_items', (table) => {
+  .createTable('r_session_line_item', (table) => {
     table.increments()
-    table.integer('product_id').unsigned().references('products.id')
-    table.integer('receiving_session_id').unsigned().references('receiving_sessions.id')
+    table.integer('product_id').unsigned().references('product.id')
+    table.integer('receiving_session_id').unsigned().references('receiving_session.id')
     table.decimal('quantity').notNullable();
   })
 };
 
 exports.down = (knex, Promise) => knex.schema
-  .dropTable('i_session_line_items')
-  .dropTable('w_session_line_items')
-  .dropTable('s_session_line_items')
-  .dropTable('r_session_line_items')
-  .dropTable('products')
-  .dropTable('inventory_sessions')
-  .dropTable('waste_sessions')
-  .dropTable('sales_sessions')
-  .dropTable('receiving_sessions');
+  .dropTable('i_session_line_item')
+  .dropTable('w_session_line_item')
+  .dropTable('s_session_line_item')
+  .dropTable('r_session_line_item')
+  .dropTable('product')
+  .dropTable('inventory_session')
+  .dropTable('waste_session')
+  .dropTable('sales_session')
+  .dropTable('receiving_session');
