@@ -1,5 +1,3 @@
-'use strict';
-
 const SalesSession = require('../models/sales_session');
 
 module.exports.getAll = (req, res, next) => {

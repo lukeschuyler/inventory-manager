@@ -1,7 +1,5 @@
-'use strict'
-
-const SalesLineItem = require('../models/sales_line_item')
-const Product = require('../models/product.js')
+const SalesLineItem = require('../models/sales_line_item');
+const Product = require('../models/product.js');
 
 module.exports.getAll = (req, res, next) => {
   returnSalesLineItem.getAll()

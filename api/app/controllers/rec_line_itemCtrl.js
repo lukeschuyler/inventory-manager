@@ -1,5 +1,5 @@
-const RecLineItem = require('../models/rec_line_item')
-const Product = require('../models/product.js')
+const RecLineItem = require('../models/rec_line_item');
+const Product = require('../models/product.js');
 
 module.exports.getAll = (req, res, next) => {
   RecLineItem.getAll()

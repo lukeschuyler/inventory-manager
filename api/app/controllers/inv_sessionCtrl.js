@@ -1,4 +1,4 @@
-const InvSession = require('../models/inv_session')
+const InvSession = require('../models/inv_session');
 
 module.exports.getAll = (req, res, next) => {
   InvSession.getAll()

@@ -1,7 +1,7 @@
-const InvSession = require('../models/inv_session')
-const RecSession = require('../models/rec_session')
-const SalesSession = require('../models/sales_session')
-const WasteSession = require('../models/waste_session')
+const InvSession = require('../models/inv_session');
+const RecSession = require('../models/rec_session');
+const SalesSession = require('../models/sales_session');
+const WasteSession = require('../models/waste_session');
 
 module.exports.getAll = (req, res, next) => {
   Promise.all([InvSession.getAll(), RecSession.getAll(), SalesSession.getAll(), WasteSession.getAll()])

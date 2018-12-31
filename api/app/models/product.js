@@ -1,5 +1,3 @@
-'use strict'
-
 const { bookshelf } = require('../db/database')
 require('./inv_session')
 require('./inv_line_item')

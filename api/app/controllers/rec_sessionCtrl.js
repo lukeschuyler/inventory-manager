@@ -1,4 +1,4 @@
-const RecSession = require('../models/rec_session')
+const RecSession = require('../models/rec_session');
 
 module.exports.getAll = (req, res, next) => {
   RecSession.getAll()

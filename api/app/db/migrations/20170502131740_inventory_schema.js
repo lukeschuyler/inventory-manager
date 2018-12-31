@@ -10,7 +10,7 @@ exports.up = (knex, Promise) => {
     table.timestamp('updated_at');
   })
 
-  .createTable('token', table => {
+  .createTable('user_token', table => {
     table.increments();
     table.string('token');
     table.timestamp('created_at');
