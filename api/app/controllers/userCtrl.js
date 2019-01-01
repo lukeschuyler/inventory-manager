@@ -1,31 +1,11 @@
 const UserToken = require('../models/user_token.js');
 const User = require('../models/user.js');
 
-module.exports.getAll = (req, res, next) => {
-  User.getAll()
-  .then(users => res.status(200).json(users))
-  .catch(error => next(error))
-}
-
-module.exports.getOne = ({ params: { id } }, res, next) => {
-  User.getOne(id)
-  .then(user => res.status(200).json(user))
-  .catch(error => next(error))
-}
-
-module.exports.deleteUser = ({ params: {id} }, res, next) => {
-  User.deleteUser(id)
-  .then(user => res.status(202).json(user))
-  .catch(error => next(error))
-}
-
-module.exports.editUser = ({ body }, res, next) => {
-  const id = body.id
-  User.editUser(id, body)
-  .then(user => res.status(200).json(user))
-  .catch(error => next(error))
-}
-
+/*
+ *
+ * LOGIN
+ *
+ */
 module.exports.login = async ({ body }, res, next) => {
   let { email, password } = body;
   
@@ -33,7 +13,6 @@ module.exports.login = async ({ body }, res, next) => {
   let user;
   try {
     user = await User.getOneByEmail(email);
-    console.log(user);
   }
   catch(e) {
     return next(e);
@@ -74,6 +53,32 @@ module.exports.login = async ({ body }, res, next) => {
   }
   
   return res.status(200).json({
-    message: 'success'
-  })
+    message: 'success',
+    token
+  });
+}
+
+module.exports.getAll = (req, res, next) => {
+  User.getAll()
+  .then(users => res.status(200).json(users))
+  .catch(error => next(error))
+}
+
+module.exports.getOne = ({ params: { id } }, res, next) => {
+  User.getOne(id)
+  .then(user => res.status(200).json(user))
+  .catch(error => next(error))
+}
+
+module.exports.deleteUser = ({ params: {id} }, res, next) => {
+  User.deleteUser(id)
+  .then(user => res.status(202).json(user))
+  .catch(error => next(error))
+}
+
+module.exports.editUser = ({ body }, res, next) => {
+  const id = body.id
+  User.editUser(id, body)
+  .then(user => res.status(200).json(user))
+  .catch(error => next(error))
 }

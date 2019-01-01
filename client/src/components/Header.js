@@ -5,7 +5,22 @@ import { connect } from 'react-redux';
 import { Navbar, NavItem, MenuItem, NavDropdown, Nav } from 'react-bootstrap';
 import Headroom from 'react-headroom';
 
+import * as actions from '../actions/auth';
+
 class Header extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  handleSelect = key => {
+    if (key == 4) {
+      this.props.signout(() => {
+        console.log(this.props)
+        this.props.history.push('/signin');
+      });
+    }
+  }
+
   renderLinks() {
     if (this.props.authenticated) {
       return (
@@ -13,9 +28,10 @@ class Header extends Component {
           <Nav>
             <NavItem eventKey={1} href="/sessions">Sessions</NavItem>
           </Nav>
-          <Nav pullRight>
+          <Nav pullRight bsStyle="pills" activeKey={1} onSelect={this.handleSelect}>
             <NavItem eventKey={2} href="/products">View Products</NavItem>
             <NavItem eventKey={2} href="/products/search">Search Products</NavItem>
+            <NavItem eventKey={4} href="#">Sign Out</NavItem>
           </Nav>
         </div>
       );
@@ -51,4 +67,4 @@ function mapStateToProps(state) {
   return { authenticated: state.auth.authenticated, userId: state.auth.userId }
 }
 
-export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps, actions)(Header);

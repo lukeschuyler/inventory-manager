@@ -7,7 +7,7 @@ import * as actions from '../../actions/auth';
 class Signin extends Component {
   onSubmit = formProps => {
     this.props.signin(formProps, () => {
-      this.props.history.push('./notes');
+      this.props.history.push('./');
     });
   }
 
@@ -16,15 +16,15 @@ class Signin extends Component {
 
     return (
       <div>
-        <form onSubmit={handleSubmit(this.onSubmit)} className="container log-form">
+        <form onSubmit={handleSubmit(this.onSubmit)} className="container login-form">
           <div className="form-group row">
             <label htmlFor="">Email</label>
-            <Field autoComplete="none" name="email" type="text" component="input" />
+            <Field className="form-control" autoComplete="none" name="email" type="text" component="input" />
           </div>        
-          <fieldset>
+          <div className="form-group row">
             <label htmlFor="">Password</label>
-            <Field autoComplete="none" name="password" type="password" component="input" />
-          </fieldset>
+            <Field className="form-control" autoComplete="none" name="password" type="password" component="input" />
+          </div>
           <div>{this.props.errorMessage}</div>
           <button>Sign in</button>
         </form>

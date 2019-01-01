@@ -24,14 +24,11 @@ body {
   background-color: #0375b4;
 }
 
-.log-form {
+.login-form {
   margin-top: 5%;
-  border-radius: 10px;
-  box-shadow: 0px 10px 10px rgba(0,0,0, .5),
-              0px -5px 10px rgba(0,0,0, .5);
   padding-top: 2%;
   padding-bottom: 2%;
-  width: 60%;
+  width: 25%;
   background-color: white;
 }
 

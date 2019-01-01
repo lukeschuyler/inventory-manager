@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 /*
  *  HIGH ORDER FUNCTION
+ *  requires authentication for component passed to this component
  */
 export default ChildComponent => {
 
@@ -19,7 +20,7 @@ export default ChildComponent => {
   
     shouldNavigateAway() {
       if (!this.props.auth) {
-        this.props.history.push('/');
+        this.props.history.push('/signin');
       }
     }
     

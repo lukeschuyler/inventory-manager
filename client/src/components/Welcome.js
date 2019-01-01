@@ -1,3 +1,6 @@
 import React from 'react';
+import requireAuth from './requireAuth';
 
-export default () => <div id="welcome"><h3>Welcome Component</h3></div>
+const Welcome = () => <div id="welcome"><h3>Simply Managed</h3></div>
+
+export default requireAuth(Welcome);

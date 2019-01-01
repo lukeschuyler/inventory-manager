@@ -24,11 +24,22 @@ export const signup = (formProps, cb) => async dispatch => {
 export const signin = (formProps, cb) => async dispatch => {
   try {
     const response = await axios.post('/login', formProps);
-    dispatch({ type: AUTH_USER, payload: response.data });
-    localStorage.setItem('userId', response.data.userId);
-    localStorage.setItem('token', response.data.token);
-    cb();
-  } catch (e) {
+    let data = response && response.data;
+    
+    // token will set information and redirect
+    if (data.token) {
+      dispatch({ type: AUTH_USER, payload: response.data });
+      localStorage.setItem('userId', response.data.userId);
+      localStorage.setItem('token', response.data.token);
+      return cb();
+    }
+    
+    // check for message
+    let message = (data.message) || 'No user matches these credentials.';
+    dispatch({ type: AUTH_ERROR, payload: message });
+  } 
+
+  catch (e) {
     dispatch({ type: AUTH_ERROR, payload: 'No user matches these credentials.' });
   }
 };
@@ -38,7 +49,7 @@ export const deleteUser = id => {
   return { type: DELETE_USER, payload: id }
 }
 
-export const signout = () => {
+export const signout = cb => {
   localStorage.removeItem('token');
-  return { type: AUTH_USER, payload: '' }
+  return cb();
 };

@@ -15,6 +15,7 @@ import Signin  from './components/auth/Signin';
 import reducers  from './reducers';
 
 import style from './styles/index.css';
+import '../node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css'
 
 const INITIAL_APP_STATE = {
   auth: { 

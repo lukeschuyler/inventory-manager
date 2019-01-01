@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import Header from './Header';
 
-export default ({ children }) => {
+export default props => {
   return (
     <div className="App">
-      <Header /> 
-      {children}
+      <Header { ...props } /> 
+      {props.children}
     </div>
   );
 }
