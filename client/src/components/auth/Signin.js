@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { compose  } from 'redux';
+
 import * as actions from '../../actions/auth';
 
 class Signin extends Component {
@@ -25,8 +27,11 @@ class Signin extends Component {
             <label htmlFor="">Password</label>
             <Field className="form-control" autoComplete="none" name="password" type="password" component="input" />
           </div>
-          <div>{this.props.errorMessage}</div>
-          <button>Sign in</button>
+          <div className="text-center text-danger login-error">{this.props.errorMessage}</div>
+          <div className="login-btn-group">
+            <button className="btn btn-success">Sign in</button>
+            <Link className="btn btn-info" to="/signup">Sign up</Link>
+          </div>
         </form>
       </div>
     )

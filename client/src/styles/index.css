@@ -292,3 +292,13 @@ textarea {
 .highlighted-button {
   background: lightblue;
 }
+
+.login-error {
+  height: 50px;
+}
+
+.login-btn-group {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}

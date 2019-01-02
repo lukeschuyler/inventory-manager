@@ -12,6 +12,7 @@ const isAuthenticated = async (req, res, next) => {
     }); 
   }
   
+  // check for token in db
   let userToken;
   try {
     userToken = await UserToken.getOne(token);
@@ -30,8 +31,8 @@ const isAuthenticated = async (req, res, next) => {
     }); 
   }
 
+  // attach user to request for ensuing acitons to always have
   let loggedInUser = userToken && await User.getOne(userToken.user_id);
-
   req.user = loggedInUser;
 
   return next();

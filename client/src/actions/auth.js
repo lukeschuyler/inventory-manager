@@ -1,11 +1,11 @@
-import axios from '../../lib/axios';
+import axios from '../lib/axios';
 import { 
   // USER
   AUTH_USER, 
   AUTH_ERROR, 
-  GET_USERS, 
   DELETE_USER, 
-} from '../types';
+  SIGN_OUT
+} from './types';
 
 
 // USER
@@ -17,7 +17,7 @@ export const signup = (formProps, cb) => async dispatch => {
     localStorage.setItem('token', response.data.token);
     cb();
   } catch (e) {
-    dispatch({ type: AUTH_ERROR, payload: 'Email is in use.' })
+    dispatch({ type: AUTH_ERROR, payload: 'Email is in use.' });
   }
 };
 
@@ -35,10 +35,10 @@ export const signin = (formProps, cb) => async dispatch => {
     }
     
     // check for message
-    let message = (data.message) || 'No user matches these credentials.';
-    dispatch({ type: AUTH_ERROR, payload: message });
+    dispatch({ type: AUTH_ERROR, payload: data.message || 'No user matches these credentials.' });
   } 
-
+  
+  // Server Error
   catch (e) {
     dispatch({ type: AUTH_ERROR, payload: 'No user matches these credentials.' });
   }
@@ -49,7 +49,8 @@ export const deleteUser = id => {
   return { type: DELETE_USER, payload: id }
 }
 
-export const signout = cb => {
+export const signout = cb => dispatch => {
   localStorage.removeItem('token');
-  return cb();
+  dispatch({ type: SIGN_OUT, payload: false });
+  cb();
 };

@@ -1,21 +1,15 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-
-import { Navbar, NavItem, MenuItem, NavDropdown, Nav } from 'react-bootstrap';
-import Headroom from 'react-headroom';
 
 import * as actions from '../actions/auth';
 
-class Header extends Component {
-  constructor(props) {
-    super(props);
-  }
+import { Navbar, NavItem, Nav } from 'react-bootstrap';
 
+class Header extends Component {
   handleSelect = key => {
-    if (key == 4) {
+    if (key === 4) {
       this.props.signout(() => {
-        console.log(this.props)
         this.props.history.push('/signin');
       });
     }
@@ -67,4 +61,4 @@ function mapStateToProps(state) {
   return { authenticated: state.auth.authenticated, userId: state.auth.userId }
 }
 
-export default connect(mapStateToProps, actions)(Header);
+export default connect(mapStateToProps, actions)(withRouter(Header));

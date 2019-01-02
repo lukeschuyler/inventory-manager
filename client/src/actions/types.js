@@ -1,12 +1,13 @@
 // Users
-export const AUTH_USER = 'auth_user';
-export const AUTH_ERROR = 'auth_error';
-export const GET_USERS = 'get_users';
-export const DELETE_USER = 'delete_user';
+export const AUTH_USER = 'AUTH_USER';
+export const AUTH_ERROR = 'AUTH_ERROR';
+export const GET_USERS = 'GET_USERS';
+export const DELETE_USER = 'DELETE_USER';
+export const SIGN_OUT = 'SIGN_OUT';
 
 // Notes
-export const GET_ALL_NOTES = 'get_all_notes';
-export const GET_USER_NOTES = 'get_user_notes';
-export const DELETE_NOTE = 'delete_notes';
-export const ADD_NOTE = 'add_note';
-export const NOTES_ERROR = 'notes_error';
+export const FETCH_ALL_SESSIONS = 'FETCH_ALL_SESSIONS';
+export const SESSIONS_ERROR = 'SESSIONS_ERROR';
+// export const DELETE_NOTE = 'DELETE_NOTE';
+// export const ADD_NOTE = 'ADD_NOTE';
+// export const NOTES_ERROR = 'NOTES_ERROR';

@@ -7,20 +7,17 @@ import reduxThunk from 'redux-thunk';
 
 import App from './components/App';
 import Welcome from './components/Welcome';
-import Notes from './components/Notes';
-import AddNote from './components/AddNote';
 import Signup  from './components/auth/Signup';
-import Signout  from './components/auth/Signout';
 import Signin  from './components/auth/Signin';
+import Sessions  from './components/sessions/Sessions';
 import reducers  from './reducers';
 
-import style from './styles/index.css';
+import './styles/index.css';
 import '../node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css'
 
 const INITIAL_APP_STATE = {
   auth: { 
-    authenticated: localStorage.getItem('token'), 
-    userId: localStorage.getItem('userId') 
+    authenticated: localStorage.getItem('token')
   }
 }
 
@@ -36,10 +33,8 @@ ReactDOM.render(
         <App>
           <Route path="/" exact component={Welcome} />
           <Route path="/signup" component={Signup} />
-          <Route path="/signout" component={Signout} />
           <Route path="/signin" component={Signin} />
-          <Route path="/notes" component={Notes} />
-          <Route path="/add-note" component={AddNote} />
+          <Route path="/sessions" component={Sessions} />
         </App>
       </BrowserRouter>
     </Provider>,
