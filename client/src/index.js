@@ -5,11 +5,12 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import reduxThunk from 'redux-thunk';
 
-import App from './components/App';
+import App from './containers/App';
 import Welcome from './components/Welcome';
 import Signup  from './components/auth/Signup';
 import Signin  from './components/auth/Signin';
-import Sessions  from './components/sessions/Sessions';
+import Sessions  from './containers/Sessions';
+
 import reducers  from './reducers';
 
 import './styles/index.css';

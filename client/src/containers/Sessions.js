@@ -1,28 +1,16 @@
 import React, { Component } from 'react';
-import { Route, Link, NavLink } from 'react-router-dom'
+import { Route, NavLink } from 'react-router-dom'
 import { connect } from 'react-redux';
 
-import Sales from './Sales.js'
-import Receiving from './Receiving.js'
-import Inventory from './Inventory'
-import Waste from './Waste'
-// import SessionLink from './SessionLink.js'
+import Sales from '../components/sessions/Sales'
+import Receiving from '../components/sessions/Receiving'
+import Inventory from '../components/sessions/Inventory'
+import Waste from '../components/sessions/Waste'
 
-import * as actions from '../../actions/sessions';
+import * as actions from '../actions/sessions';
 
 
 class Sessions extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      invSessions: [],
-      wasteSessions: [],
-      salesSessions: [],
-      recSessions: [],
-      loading: true
-    }
-  }
-
   componentDidMount() {
     this.props.fetchAllSessions();
   }
