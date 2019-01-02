@@ -1,15 +1,12 @@
-'use strict';
-
 const { Router } = require('express');
-
 const { getAll, getOne, addSession, deleteSession, editSession } = require('../controllers/sales_sessionCtrl');
-
 const router = Router();
+const { isAuthenticated } = require('../helpers/auth');
 
-router.get('/sales_sessions', getAll);
-router.get('/sales_sessions/:id', getOne);
-router.post('/sales_sessions', addSession)
-router.delete('/sales_sessions/:id', deleteSession)
-router.patch('/sales_sessions', editSession)
+router.get('/sales_sessions', isAuthenticated, getAll);
+router.get('/sales_sessions/:id', isAuthenticated, getOne);
+router.post('/sales_sessions', isAuthenticated, addSession)
+router.delete('/sales_sessions/:id', isAuthenticated, deleteSession)
+router.patch('/sales_sessions', isAuthenticated, editSession)
 
 module.exports = router;
