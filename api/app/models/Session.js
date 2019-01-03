@@ -1,15 +1,16 @@
-const { bookshelf } = require('../db/database')
-require('./sales_line_item')
-require('./product')
+const { bookshelf } = require('../db/database');
+require('./SessionLineItem');
+require('./Product');
 
-const SalesSession = bookshelf.Model.extend({
-  tableName: 'sales_session',
-  products: function() { return this.belongsToMany('Product').through('SalesLineItem') },
+const Session = bookshelf.Model.extend({
+  tableName: 'session',
+  products: function() { return this.belongsToMany('Product').through('SessionLineItem') },
   user: function() { return this.belongsTo('User') },
-  items: function() { return this.hasMany('SalesLineItem') }
+  user: function() { return this.belongsTo('SessionType') },
+  items: function() { return this.hasMany('SessionLineItem') }
 }, {
-  getAll() {
-    return this.forge()
+  getAll(criteria) {
+    return this.forge(criteria)
     .fetchAll({withRelated: ['products', 'user'], require: true})
     .then(sessions => sessions)
     .catch(error => error)
@@ -40,4 +41,4 @@ const SalesSession = bookshelf.Model.extend({
   }
 })
 
-module.exports = bookshelf.model('SalesSession', SalesSession)
+module.exports = bookshelf.model('Session', Session)

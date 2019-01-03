@@ -2,7 +2,7 @@
 
 const { Router } = require('express');
 
-const { getAll, getAllBySession, getOne, addItem, deleteItem, editItem } = require('../controllers/waste_line_itemCtrl');
+const { getAll, getAllBySession, getOne, addItem, deleteItem, editItem } = require('../controllers/SessionsController.js');
 
 const router = Router();
 

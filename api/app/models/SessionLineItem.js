@@ -1,11 +1,11 @@
 const { bookshelf } = require('../db/database');
-require('./product');
-require('./inv_session');
+require('./Product');
+require('./Session');
 
-const InvLineItem = bookshelf.Model.extend({
-  tableName: 'i_session_line_item',
+const SessionLineItem = bookshelf.Model.extend({
+  tableName: 'session_line_item',
   product: function() { return this.belongsTo('Product') },
-  session: function() { return this.belongsTo('InvSession') }
+  session: function() { return this.belongsTo('Session') }
 }, {
   async getAll() {
     try {
@@ -64,4 +64,4 @@ const InvLineItem = bookshelf.Model.extend({
   }
 })
 
-module.exports = bookshelf.model('InvLineItem', InvLineItem)
+module.exports = bookshelf.model('SessionLineItem', SessionLineItem)

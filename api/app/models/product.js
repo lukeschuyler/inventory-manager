@@ -1,21 +1,12 @@
 const { bookshelf } = require('../db/database')
-require('./inv_session')
-require('./inv_line_item')
-require('./waste_session')
-require('./waste_line_item')
-require('./rec_session')
-require('./rec_line_item')
-require('./sales_session')
-require('./sales_line_item')
+require('./Session')
+require('./SessionLineItem')
 
 const Product = bookshelf.Model.extend({
   tableName: 'product',
-  wasteSession: function() { return this.belongsToMany('WasteSession').through('WasteLineItem') },
-  invSession: function() { return this.belongsToMany('InvSession').through('InvLineItem') },
-  salesSession: function() { return this.belongsToMany('SalesSession').through('SalesLineItem') },
-  recSession: function() { return this.belongsToMany('RecSession').through('RecLineItem') }
+  session: function() { return this.belongsToMany('Session').through('SessionLineItem') },
 }, {
-  dependents: ['wasteSession', 'invSession', 'salesSession', 'recSession'],
+  dependents: ['session'],
   getAll() {
     return this.forge()
     .fetchAll()
