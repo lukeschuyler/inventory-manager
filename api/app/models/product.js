@@ -1,6 +1,6 @@
-const { bookshelf } = require('../db/database')
-require('./Session')
-require('./SessionLineItem')
+const { bookshelf } = require('../db/database');
+// require('./Session');
+// require('./SessionLineItem');
 
 const Product = bookshelf.Model.extend({
   tableName: 'product',
@@ -55,4 +55,4 @@ const Product = bookshelf.Model.extend({
   }
 })
 
-module.exports = bookshelf.model('Product', Product)
+module.exports = bookshelf.model('Product', Product);

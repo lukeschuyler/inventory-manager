@@ -3,9 +3,9 @@ const router = Router();
 
 // Actions
 const { 
-  getInventory, getWaste, getReceiving, getSales,
+  getInventory, getWaste, getReceiving, getSales, getAllByType,
   getOne, addSession, deleteSession, editSession, getAll
-} = require('../controllers/SessionController.js');
+} = require('../controllers/SessionController');
 
 // Authentication policy check
 const { isAuthenticated } = require('../helpers/auth');

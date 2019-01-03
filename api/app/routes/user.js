@@ -6,7 +6,7 @@ const {
   
   login, 
   signup, 
-} = require('../controllers/userCtrl');
+} = require('../controllers/UserController');
 
 const { Router } = require('express');
 const router = Router();

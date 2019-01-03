@@ -1,5 +1,6 @@
-const Session = require('../models/session');
+const Session = require('../models/Session');
 
+// CRUD
 module.exports.getAll = (req, res, next) => {
   Session.getAll()
   .then(sessions => res.status(200).json(sessions))
@@ -9,30 +10,6 @@ module.exports.getAll = (req, res, next) => {
 module.exports.getOne = (req, res, next) => {
   Session.getOne(id)
   .then(session => res.status(200).json(session))
-  .catch(error => next(error))
-}
-
-module.exports.getWaste = (req, res, next) => {
-  Session.getAll({ session_type_id: 3 })
-  .then(sessions => res.status(200).json(sessions))
-  .catch(error => next(error))
-}
-
-module.exports.getSales = (req, res, next) => {
-  Session.getAll({ session_type_id: 1 })
-  .then(sessions => res.status(200).json(sessions))
-  .catch(error => next(error))
-}
-
-module.exports.getInventory = (req, res, next) => {
-  Session.getAll({ session_type_id: 2 })
-  .then(sessions => res.status(200).json(sessions))
-  .catch(error => next(error))
-}
-
-module.exports.getReceiving = (req, res, next) => {
-  Session.getAll({ session_type_id: 4 })
-  .then(sessions => res.status(200).json(sessions))
   .catch(error => next(error))
 }
 
@@ -52,5 +29,30 @@ module.exports.editSession = ({body}, res, next) => {
   const id = body.id
   Session.editSession(id, body)
   .then(session => res.status(200).json(session))
+  .catch(error => next(error))
+}
+
+// Specific Types
+module.exports.getWaste = (req, res, next) => {
+  Session.getAllByType({ session_type_id: 3 })
+  .then(sessions => res.status(200).json(sessions))
+  .catch(error => next(error))
+}
+
+module.exports.getSales = (req, res, next) => {
+  Session.getAllByType({ session_type_id: 1 })
+  .then(sessions => res.status(200).json(sessions))
+  .catch(error => next(error))
+}
+
+module.exports.getInventory = (req, res, next) => {
+  Session.getAllByType({ session_type_id: 2 })
+  .then(sessions => res.status(200).json(sessions))
+  .catch(error => next(error))
+}
+
+module.exports.getReceiving = (req, res, next) => {
+  Session.getAllByType({ session_type_id: 4 })
+  .then(sessions => res.status(200).json(sessions))
   .catch(error => next(error))
 }

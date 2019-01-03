@@ -1,5 +1,5 @@
-const UserToken = require('../models/user_token.js');
-const User = require('../models/user.js');
+const UserToken = require('../models/UserToken');
+const User = require('../models/User');
 
 // High order function for allowing/disallowing users from performing actions
 // based on auth status 
