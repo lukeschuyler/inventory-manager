@@ -2,6 +2,7 @@
 exports.up = (knex, Promise) => {
   return knex.schema
   .createTable('user', table => {
+    console.log('user')
     table.increments();
     table.string('name');
     table.string('email');
@@ -11,6 +12,7 @@ exports.up = (knex, Promise) => {
   })
 
   .createTable('user_token', table => {
+    console.log('token')
     table.increments();
     table.string('token');
     table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
@@ -18,6 +20,7 @@ exports.up = (knex, Promise) => {
   })
 
   .createTable('product', table => {
+    console.log('product')
     table.increments();
     table.bigInteger('upc_code').unsigned().notNullable().unique();
     table.string('name').notNullable();
@@ -31,12 +34,14 @@ exports.up = (knex, Promise) => {
     table.string('active').notNullable();
   })
 
-  createTable('session_type', table => {
+  .createTable('session_type', table => {
+    console.log('session_type')
     table.increments();
     table.string('title').notNullable();
   })
 
   .createTable('session', table => {
+    console.log('session')
     table.increments();
     table.timestamp('date').notNullable().defaultTo(knex.fn.now());
 
@@ -45,6 +50,7 @@ exports.up = (knex, Promise) => {
   })
 
   .createTable('session_line_item', table => {
+    console.log('session_line_item')
     table.increments();
     table.decimal('quantity').notNullable();
 
