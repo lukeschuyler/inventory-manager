@@ -1,5 +1,3 @@
-const { to } = require('await-to-js');
-
 const UserToken = require('../models/UserToken');
 const User = require('../models/User');
 

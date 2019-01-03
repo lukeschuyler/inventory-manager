@@ -8,8 +8,9 @@ import * as actions from '../../actions/auth';
 
 class Signup extends Component {
   onSubmit = (formProps) => {
+    console.log(formProps);
     this.props.signup(formProps, () => {
-      this.props.history.push('./notes');
+      this.props.history.push('./');
     });
   }
 
@@ -24,6 +25,10 @@ class Signup extends Component {
           <div className="form-group row">
             <label htmlFor="">Email</label>
             <Field className="form-control" autoComplete="none" name="email" type="text" component="input" />
+          </div>           
+          <div className="form-group row">
+            <label htmlFor="">Full Name</label>
+            <Field className="form-control" autoComplete="none" name="fullName" type="text" component="input" />
           </div>        
           <div className="form-group row">
             <label htmlFor="">Password</label>

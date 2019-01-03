@@ -2,6 +2,12 @@ const express = require('express');
 const cors = require('cors');
 const { json, urlencoded } = require('body-parser');
 
+// lib for good async await error handling syntax
+// used throughout app for async actions 
+// https://www.npmjs.com/package/await-to-js
+const { to } = require('await-to-js');
+global.to = to;
+
 // index.js is the entry file for routes
 const routes = require('./app/routes/');
 

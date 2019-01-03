@@ -1,13 +1,8 @@
-// lib for error handling
-const { to } = require('await-to-js');
-
 const UserToken = require('../models/UserToken');
 const User = require('../models/User');
 
 /*
- *
  * LOGIN
- *
  */
 module.exports.login = async ({ body }, res, next) => {
   let { email, password } = body;
@@ -26,7 +21,7 @@ module.exports.login = async ({ body }, res, next) => {
     
   // password check
   [ err ] = await to(User.comparePassword(password, user.attributes.password_hash));
-
+  console.log(err)
   if (err) {
     return res.status(401).json({
       error: 2,
@@ -57,54 +52,29 @@ module.exports.login = async ({ body }, res, next) => {
 }
 
 /*
- *
- * LOGIN
- *
+ * SIGNUP
  */
 module.exports.signup = async ({ body }, res, next) => {
-  let { email, password } = body;
-  
+  let { email, password, fullName } = body;
   // First find user based on creds provided
-  let user;
-  try {
-    user = await User.getOneByEmail(email);
-  }
-  catch(e) {
-    return next(e);
-  }
-  
+  let err, user;
+  [ err, user ] = await to(User.getOneByEmail(email));
+  if (err) return next(err);
+
   // Respond unauthorized if not in db
   if (user) {
     return res.status(401).json({ 
       message: 'Email already in use.'
     });
   }
-    
-  // password check
-  try {
-    await User.comparePassword(password, user.attributes.password_hash);
-  } catch (e) {
-    return res.status(401).json({
-      error: 2,
-      message: 'Incorrect password.'
-    });
-  }
-  
+
+  [ err, user ] = await to(User.addUser({ email, name: fullName, password_hash: password }));
+  if (err) return next(err);
+
+  // create new token
   const token = await require('crypto').randomBytes(16).toString('hex');
-
-  try {
-    // destroy all existing tokens ensuring there is only one per user at a time
-    await UserToken.destroy(user.id);
-
-    // create new token
-    await UserToken.create(token, user.id);
-
-  } catch (e) {
-    return res.status(500).json({
-      error: 2,
-      message: 'Internal Server Error.'
-    });
-  }
+  [ err ] = await to(UserToken.create(token, user.id));
+  if (err) return next(err);
   
   return res.status(200).json({
     message: 'success',

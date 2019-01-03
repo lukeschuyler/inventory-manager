@@ -3,52 +3,50 @@ const bcrypt = require('bcryptjs');
 
 const User = bookshelf.Model.extend({
   tableName: 'user',
+  initialize: function() {
+    this.on('creating', this.hashPassword, this);
+  },
+  hashPassword: async function(model, attrs, options) {
+    let hash = await hashPassword(model);
+    return hash;
+  },
 }, {
-  getAll() {
-    return this.forge()
-    .fetchAll()
-    .then(users => users)
-    .catch(error => error)
+  async getAll() {
+    let [ err, users ] = await to(this.forge().fetchAll());
+    if (err) return err;
+    return users;
   },
-  getOne(id) {
-    return this.forge({id})
-    .fetch()
-    .then(user => user)
-    .catch(error => error)
+  async getOne(id) {
+    let [ err, user ] = await to(this.forge({id}).fetch());
+    if (err) return err;
+    return user;
   },  
-  getOneByEmail(email) {
-    return this.forge({ email })
-    .fetch()
-    .then(user => user)
-    .catch(error => error)
+  async getOneByEmail(email) {
+    let [ err, user ] = await to(this.forge({email}).fetch());
+    if (err) return err;
+    return user;
   },
-  addUser(newUser) {
-    return this.forge(newUser)
-    .save()
-    .then(user => user)
-    .catch(error => error)
+  async addUser(newUser) {
+    let [ err, user ] = await to(this.forge(newUser).save());
+    if (err) return err;
+    return user;
   },
-  deleteItem(id) {
-    return this.forge({id})
-    .destroy()
-    .then(user => user)
-    .catch(error => error)
+  async deleteItem(id) {
+    let [ err, user ] = await to(this.forge({id}).destroy());
+    if (err) return err;
+    return user;
   },
-  editItem(id, edits) {
-    return this.where({id})
-    .save(edits, {method: 'update'})
-    .then(user => user)
-    .catch(error => error)
+  async editItem(id, edits) {
+    let [ err, user ] = await to(this.where({id}).save(edits, {method: 'update'}));
+    if (err) return err;
+    return user;
   },
   async comparePassword(pw, hash) {
     let match = await compare(pw, hash);
-
-    if (!match) {
-      throw new Error();
-    }
+    if (!match) throw new Error('Passwords do not match!');
 
     return match;
-  }
+  },
 });
 
 function compare(pw, hash) { 
@@ -58,5 +56,16 @@ function compare(pw, hash) {
     });
   }); 
 }
+
+const hashPassword = model => {
+  return new Promise((res, rej) => {
+    bcrypt.hash(model.attributes.password_hash, 10, function(err, hash) {
+      if (err) rej(err);
+      model.set('password_hash', hash);
+      res(hash);
+    });
+  });
+}
+
 
 module.exports = bookshelf.model('User', User);
