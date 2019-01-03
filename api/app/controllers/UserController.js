@@ -1,3 +1,6 @@
+// lib for error handling
+const { to } = require('await-to-js');
+
 const UserToken = require('../models/UserToken');
 const User = require('../models/User');
 
@@ -10,14 +13,10 @@ module.exports.login = async ({ body }, res, next) => {
   let { email, password } = body;
   
   // First find user based on creds provided
-  let user;
-  try {
-    user = await User.getOneByEmail(email);
-  }
-  catch(e) {
-    return next(e);
-  }
-  
+  let err, user;
+  [ err, user ] = await to(User.getOneByEmail(email));
+  if (err) return next(err);
+
   // Respond unauthorized if not in db
   if (!user) {
     return res.status(401).json({ 
@@ -26,16 +25,15 @@ module.exports.login = async ({ body }, res, next) => {
   }
     
   // password check
-  try {
-    await User.comparePassword(password, user.attributes.password_hash);
-  } catch (e) {
-    console.log(e);
+  [ err ] = await to(User.comparePassword(password, user.attributes.password_hash));
+
+  if (err) {
     return res.status(401).json({
       error: 2,
       message: 'Incorrect password.'
     });
   }
-  
+    
   const token = await require('crypto').randomBytes(16).toString('hex');
 
   try {

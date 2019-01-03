@@ -5,7 +5,7 @@ WORKDIR '/app'
 RUN apk update && apk add yarn python g++ make && rm -rf /var/cache/apk/* && npm install -g knex
 
 COPY ./package.json ./
-RUN npm install -g -s --no-progress yarn && \
-    yarn
+COPY ./yarn.lock ./
+RUN npm install -g -s --no-progress yarn && yarn
 COPY . .
 CMD ["npm", "run", "dev"]
