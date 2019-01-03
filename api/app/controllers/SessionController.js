@@ -6,9 +6,9 @@ module.exports.getAll = (req, res, next) => {
   .catch(error => next(error))
 }
 
-module.exports.getAll = (req, res, next) => {
-  Session.getAll()
-  .then(sessions => res.status(200).json(sessions))
+module.exports.getOne = (req, res, next) => {
+  Session.getOne(id)
+  .then(session => res.status(200).json(session))
   .catch(error => next(error))
 }
 
