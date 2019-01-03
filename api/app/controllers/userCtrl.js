@@ -58,6 +58,62 @@ module.exports.login = async ({ body }, res, next) => {
   });
 }
 
+/*
+ *
+ * LOGIN
+ *
+ */
+module.exports.signup = async ({ body }, res, next) => {
+  let { email, password } = body;
+  
+  // First find user based on creds provided
+  let user;
+  try {
+    user = await User.getOneByEmail(email);
+  }
+  catch(e) {
+    return next(e);
+  }
+  
+  // Respond unauthorized if not in db
+  if (user) {
+    return res.status(401).json({ 
+      message: 'Email already in use.'
+    });
+  }
+    
+  // password check
+  try {
+    await User.comparePassword(password, user.attributes.password_hash);
+  } catch (e) {
+    return res.status(401).json({
+      error: 2,
+      message: 'Incorrect password.'
+    });
+  }
+  
+  const token = await require('crypto').randomBytes(16).toString('hex');
+
+  try {
+    // destroy all existing tokens ensuring there is only one per user at a time
+    await UserToken.destroy(user.id);
+
+    // create new token
+    await UserToken.create(token, user.id);
+
+  } catch (e) {
+    return res.status(500).json({
+      error: 2,
+      message: 'Internal Server Error.'
+    });
+  }
+  
+  return res.status(200).json({
+    message: 'success',
+    token
+  });
+}
+
 module.exports.getAll = (req, res, next) => {
   User.getAll()
   .then(users => res.status(200).json(users))

@@ -46,7 +46,7 @@ class Header extends Component {
       <Navbar inverse className="app-nav">
         <Navbar.Header>
           <Navbar.Brand>
-            <a href="/">Simply Managed</a>
+            <a href="/">Inventory Manager</a>
           </Navbar.Brand>
         </Navbar.Header>
           <div className="right-links">
@@ -58,7 +58,7 @@ class Header extends Component {
 }
 
 function mapStateToProps(state) {
-  return { authenticated: state.auth.authenticated, userId: state.auth.userId }
+  return { authenticated: state.auth.authenticated }
 }
 
 export default connect(mapStateToProps, actions)(withRouter(Header));

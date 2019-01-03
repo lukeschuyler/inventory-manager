@@ -10,8 +10,7 @@ export const fetchAllSessions = () => async dispatch => {
   try {
     response = await axios.get('/all_sessions');
     let data = response && response.data;
-    console.log(data);
-    // token will set information and redirect
+
     if (data) {
       dispatch({ type: FETCH_ALL_SESSIONS, payload: data });
     }

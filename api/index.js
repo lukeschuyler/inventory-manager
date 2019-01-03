@@ -15,7 +15,7 @@ app.use(cors({
 app.use(json());
 app.use(urlencoded({ extended: false }));
 
-// ROUTES
+// API ROUTES
 app.use('/', routes);
 
 // NOT FOUND

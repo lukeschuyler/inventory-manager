@@ -1,8 +1,5 @@
-/* eslint-disable */
-
 import React, { Component } from 'react';
 import { Link, Route } from 'react-router-dom'
-import axios from 'axios'
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import SessionGeneral from './SessionGeneral.js'
 
@@ -21,12 +18,21 @@ class Inventory extends Component {
   }
 
 
-colFormatter(cell, row) {
+  colFormatter(cell, row) {
     return (
       <Link to={`${this.props.match.url}/${row.id}`}>
         View
       </Link>
     )
+  }
+
+  mapSessions() {
+    return this.props.sessions.map(s => {
+      return {
+        ...s,
+        username: s.user.name
+      }
+    });
   }
 
   dateFormatter(cell, row) {

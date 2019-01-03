@@ -1,8 +1,5 @@
-/* eslint-disable */
-
 import React, { Component } from 'react';
-import { Link, Route } from 'react-router-dom'
-import axios from 'axios'
+import { Link, Route, withRouter } from 'react-router-dom'
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import SessionGeneral from './SessionGeneral.js'
 
@@ -22,12 +19,12 @@ class Waste extends Component {
   }
 
 
-colFormatter(cell, row) {
+  colFormatter(cell, row) {
     return (
       <Link to={`${this.props.match.url}/${row.id}`}>
         View
       </Link>
-    )
+    );
   }
 
   dateFormatter(cell, row) {
@@ -35,9 +32,18 @@ colFormatter(cell, row) {
     return `${('0' + (cell.getMonth() + 1)).slice(-2)}/${('0' + cell.getDate()).slice(-2)}/${cell.getFullYear()}`;
   }
 
+  mapSessions() {
+    return this.props.sessions.map(s => {
+      return {
+        ...s,
+        username: s.user.name
+      }
+    });
+  }
 
   render() {
-    let sessions = this.state.sessions
+    let sessions = !this.props.sessions ? [] : this.mapSessions();
+
     return (
     <div>
       <Route exact path={this.props.match.url} render={(props) => (
@@ -58,4 +64,4 @@ colFormatter(cell, row) {
   }
 }
 
-export default Waste;
+export default withRouter(Waste);

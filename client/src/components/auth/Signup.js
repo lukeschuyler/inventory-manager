@@ -17,21 +17,25 @@ class Signup extends Component {
     const { handleSubmit } = this.props;
 
     return (
-      <form onSubmit={handleSubmit(this.onSubmit)} className="container login-form">
-        <div className="form-group row">
-          <label htmlFor="">Email</label>
-          <Field className="form-control" autoComplete="none" name="email" type="text" component="input" />
-        </div>        
-        <div className="form-group row">
-          <label htmlFor="">Password</label>
-          <Field className="form-control" autoComplete="none" name="password" type="password" component="input" />
-        </div>
-        <div className="text-center text-danger login-error">{this.props.errorMessage}</div>
-        <div className="login-btn-group">
-          <button className="btn btn-success">Sign up</button>
-          <Link className="btn btn-info" to="/signin">Back to Signin</Link>
-        </div>
-      </form>
+      <div>
+        <h2 className="text-center">Inventory Manager</h2>
+        <form onSubmit={handleSubmit(this.onSubmit)} className="container login-form">
+          <h2 className="text-center">Sign up</h2>
+          <div className="form-group row">
+            <label htmlFor="">Email</label>
+            <Field className="form-control" autoComplete="none" name="email" type="text" component="input" />
+          </div>        
+          <div className="form-group row">
+            <label htmlFor="">Password</label>
+            <Field className="form-control" autoComplete="none" name="password" type="password" component="input" />
+          </div>
+          <div className="text-center text-danger login-error">{this.props.errorMessage}</div>
+          <div className="login-btn-group">
+            <button className="btn btn-success">Sign up</button>
+            <Link className="btn btn-info" to="/signin">Back to Signin</Link>
+          </div>
+        </form>
+      </div>
     )
   }
 }

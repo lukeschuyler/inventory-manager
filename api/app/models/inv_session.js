@@ -5,17 +5,18 @@ require('./product')
 const InvSession = bookshelf.Model.extend({
   tableName: 'inventory_session',
   products: function() { return this.belongsToMany('Product').through('InvLineItem') },
+  user: function() { return this.belongsTo('User') },
   items: function() { return this.hasMany('InvLineItem') }
 }, {
   getAll() {
     return this.forge()
-    .fetchAll({withRelated: ['products'], require: true})
+    .fetchAll({withRelated: ['products', 'user'], require: true})
     .then(sessions => sessions)
     .catch(error => error)
   },
   getOne(id) {
     return this.forge({id})
-    .fetch({withRelated: ['products', 'items'], require: true})
+    .fetch({withRelated: ['products', 'user', 'items'], require: true})
     .then(session => session)
     .catch(error => error)
   },

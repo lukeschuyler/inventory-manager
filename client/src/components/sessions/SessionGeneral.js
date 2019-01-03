@@ -4,7 +4,7 @@ import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 
 class SessionGeneral extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       session: [],
       sessionType: this.props.sessionType
@@ -12,8 +12,7 @@ class SessionGeneral extends Component {
   }
 
   componentWillMount() {
-    console.log(this);
-    axios.get(`https://inventory-manager-ls.herokuapp.com/api/v1/sales_line_items/from/${this.props.match.params.session}`)
+    axios.get(`/api/sales_line_items/from/${this.props.match.params.session}`)
     .then(res => {
       let itemArray = []
       res.data.forEach(item => {

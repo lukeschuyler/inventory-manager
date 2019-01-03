@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, NavLink } from 'react-router-dom'
+import { Route, NavLink }  from 'react-router-dom'
 import { connect } from 'react-redux';
 
 import Sales from '../components/sessions/Sales'
@@ -17,6 +17,9 @@ class Sessions extends Component {
 
   render() {
     let match = this.props.match.url
+    
+    console.log(this.props)
+
     return (
       <div>
         <div className="container session-navbar">
@@ -28,10 +31,10 @@ class Sessions extends Component {
         <hr />
         <Route path={match} render={(props) => (
           <div>
-          { this.props.children }
+            { this.props.children }
           </div>
         )}/>
-         <Route path={`${match}/sales`} render={(props) => (
+         <Route path={`${match}/sales`} render={(props) =>  (
             <Sales { ...props } sessions={this.props.sales} />
          )} />
          <Route path={`${match}/receiving`} render={(props) => (

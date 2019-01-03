@@ -15,12 +15,13 @@ import reducers  from './reducers';
 
 import './styles/index.css';
 import '../node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css'
+import 'react-redux-datatable/dist/styles.css';
 
 const INITIAL_APP_STATE = {
   auth: { 
     authenticated: localStorage.getItem('token')
   }
-}
+};
 
 const store = createStore(
   reducers,

@@ -18,7 +18,9 @@ class Signin extends Component {
 
     return (
       <div>
+        <h2 className="text-center">Inventory Manager</h2>
         <form onSubmit={handleSubmit(this.onSubmit)} className="container login-form">
+          <h2 className="text-center">Sign in</h2>
           <div className="form-group row">
             <label htmlFor="">Email</label>
             <Field className="form-control" autoComplete="none" name="email" type="text" component="input" />

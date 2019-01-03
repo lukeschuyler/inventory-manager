@@ -1,8 +1,5 @@
-/* eslint-disable */
-
 import React, { Component } from 'react';
 import { Link, Route } from 'react-router-dom'
-import axios from 'axios'
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import SessionGeneral from './SessionGeneral.js'
 
