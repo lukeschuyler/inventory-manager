@@ -21,7 +21,6 @@ class SignupForm extends Component {
   }
 
   render() {
-    console.log(this.props)
     const { handleSubmit, errorMessage } = this.props;
     let error = errorMessage ? 
                 <div className="text-center login-error alert alert-danger">{errorMessage}</div>

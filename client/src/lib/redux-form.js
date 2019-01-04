@@ -22,6 +22,7 @@ export const email = value =>
 export const comparePassword = (value, allValues) =>
   allValues.password !== value ? 'Passwords do not match' : undefined;
 
+
 export const renderField = ({
   input,
   label,

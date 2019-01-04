@@ -10,6 +10,7 @@ const Loading = () => <div id="Loading"><h1 className="text-center">Loading...</
 
 class App extends Component {
   componentDidMount() {
+    console.log('checking')
     if (this.props.checking) {
       this.props.checkToken();
     }

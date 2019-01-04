@@ -7,6 +7,8 @@ import { reduxForm, Field } from 'redux-form';
 
 import * as actions from '../../actions/auth';
 
+import * as validate from '../../lib/redux-form';
+
 class SigninForm extends Component {
   onSubmit = formProps => {
     this.props.signin(formProps, () => {
@@ -26,14 +28,20 @@ class SigninForm extends Component {
     return (
       <form onSubmit={handleSubmit(this.onSubmit)} className="container login-form">
         <h2 className="text-center">Sign in</h2>
-        <div className="form-group">
-          <label htmlFor="">Email</label>
-          <Field className="form-control" autoComplete="none" name="email" type="text" component="input" />
-        </div>        
-        <div className="form-group">
-          <label htmlFor="">Password</label>
-          <Field className="form-control" autoComplete="none" name="password" type="password" component="input" />
-        </div>
+        <Field
+          name="email"
+          type="text"
+          component={validate.renderField}
+          label="Email"
+          validate={[validate.required, validate.email]}
+        />     
+        <Field
+          name="password"
+          type="password"
+          component={validate.renderField}
+          label="Password"
+          validate={[validate.required]}
+        />           
         {error}
         <div className="login-btn-group">
           <button className="btn btn-block btn-primary">Sign in</button>

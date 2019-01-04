@@ -1,7 +1,7 @@
 // React/Router
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 // Redux and redux-helpers
 import { Provider } from 'react-redux';
@@ -14,6 +14,8 @@ import Main from './containers/Main';
 import Signup  from './containers/auth/Signup';
 import Signin  from './containers/auth/Signin';
 import Sessions  from './containers/Sessions';
+import Products  from './containers/Products';
+import ProductSearch  from './containers/ProductSearch';
 
 // Reducer index
 import reducers  from './reducers';
@@ -44,6 +46,10 @@ ReactDOM.render(
           <Route path="/" exact component={Main} />
           <Route path="/signup" component={Signup} />
           <Route path="/sessions" component={Sessions} />
+          <Switch>
+            <Route path="/products" component={Products} />
+            <Route path='products/search' component={ProductSearch} />
+          </Switch>
           <Route exact path="/signin" component={Signin} />
         </App>
       </BrowserRouter>
