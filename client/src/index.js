@@ -47,8 +47,8 @@ ReactDOM.render(
           <Route path="/signup" component={Signup} />
           <Route path="/sessions" component={Sessions} />
           <Switch>
-            <Route path="/products" component={Products} />
-            <Route path='products/search' component={ProductSearch} />
+            <Route exact path="/products" component={Products} />
+            <Route path='/products/search' component={ProductSearch} />
           </Switch>
           <Route exact path="/signin" component={Signin} />
         </App>

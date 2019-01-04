@@ -8,11 +8,11 @@ import sessions from './sessions';
 import { reducer as formReducer } from 'redux-form';
 
 // TABLES
-import { DataTableReducer } from 'react-redux-datatable';
+// import { DataTableReducer } from 'react-redux-datatable';
 
 export default combineReducers({
     auth,
     sessions,
-    table: DataTableReducer,
+    // table: DataTableReducer,
     form: formReducer
 });

@@ -1,40 +1,57 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import * as actions from '../actions/auth';
 
 import { Navbar, NavItem, Nav } from 'react-bootstrap';
+import { LinkContainer } from "react-router-bootstrap";
 
 class Header extends Component {
+  state = {
+    activeKey: null
+  }
+
   handleSelect = key => {
     if (key === 4) {
       this.props.signout(() => {
         this.props.history.push('/signin');
       });
     }
+    
+    this.setState({activeKey: key});
   }
 
   renderLinks() {
     if (this.props.authenticated) {
       return (
         <div>
-          <Nav>
-            <NavItem eventKey={1} href="/sessions">Sessions</NavItem>
-          </Nav>
-          <Nav pullRight bsStyle="pills" activeKey={1} onSelect={this.handleSelect}>
-            <NavItem eventKey={2} href="/products">View Products</NavItem>
-            <NavItem eventKey={2} href="/products/search">Search Products</NavItem>
-            <NavItem eventKey={4} href="#">Sign Out</NavItem>
+          <Nav pullRight bsStyle="pills" activeKey={this.state.activeKey} onSelect={this.handleSelect}>
+            <LinkContainer eventKey={1} to="/sessions">
+              <NavItem>Sessions</NavItem>
+            </LinkContainer>  
+            <LinkContainer eventKey={2} to="/products">
+              <NavItem>View Products</NavItem>
+            </LinkContainer>            
+            <LinkContainer eventKey={3} to="/products/search">
+              <NavItem>Search Products</NavItem>
+            </LinkContainer>            
+            <LinkContainer eventKey={4} to="#">
+              <NavItem>Sign Out</NavItem>
+            </LinkContainer>
           </Nav>
         </div>
       );
     } else {
       return (
         <span>
-          <Nav pullRight>
-            <NavItem eventKey={2} href="/signup">Sign Up</NavItem>
-            <NavItem eventKey={2} href="/signin">Sign In</NavItem>
+          <Nav pullRight bsStyle="pills" activeKey={this.state.activeKey} onSelect={this.handleSelect}>
+            <LinkContainer eventKey={1} to="/signin">
+              <NavItem >Sign In</NavItem>
+            </LinkContainer>    
+            <LinkContainer eventKey={2} to="/signup">
+              <NavItem>Sign Up</NavItem>
+            </LinkContainer>                
           </Nav>
         </span>
       );

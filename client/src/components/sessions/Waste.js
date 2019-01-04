@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Link, Route, withRouter } from 'react-router-dom'
+import { Link, Route, withRouter } from 'react-router-dom';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
-import SessionGeneral from './SessionGeneral.js'
+import SessionGeneral from './SessionGeneral.js';
 
 
 class Waste extends Component {
