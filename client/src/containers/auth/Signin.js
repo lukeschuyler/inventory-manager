@@ -19,25 +19,29 @@ class Signin extends Component {
   }
 
   render() {
-    const { handleSubmit } = this.props;
-
+    const { handleSubmit, errorMessage } = this.props;
+    let error = errorMessage ? <div className="text-center login-error alert alert-danger">{errorMessage}</div>
+                : '';
     return (
       <div>
         <h2 className="text-center">Inventory Manager</h2>
         <form onSubmit={handleSubmit(this.onSubmit)} className="container login-form">
           <h2 className="text-center">Sign in</h2>
-          <div className="form-group row">
+          <div className="form-group">
             <label htmlFor="">Email</label>
             <Field className="form-control" autoComplete="none" name="email" type="text" component="input" />
           </div>        
-          <div className="form-group row">
+          <div className="form-group">
             <label htmlFor="">Password</label>
             <Field className="form-control" autoComplete="none" name="password" type="password" component="input" />
           </div>
-          <div className="text-center text-danger login-error">{this.props.errorMessage}</div>
+          {error}
           <div className="login-btn-group">
-            <button className="btn btn-success">Sign in</button>
-            <Link className="btn btn-info" to="/signup">Sign up</Link>
+            <button className="btn btn-block btn-primary">Sign in</button>
+          </div>
+          <hr/>
+          <div className="text-center">
+            Don't have an account? <Link className="btn btn-link" to="/signup">Sign up</Link>
           </div>
         </form>
       </div>

@@ -32,7 +32,7 @@ client.interceptors.response.use(
     let data = response && response.data;
     if (data && response.status === 401 && data.message === 'No user with that token!') {
       localStorage.removeItem('token');
-      // window.location = '/signin';
+      localStorage.setItem('forceLogout', 'Your token is invalid, it may have expired. Please login again.');
     }
     return response;
   }, 

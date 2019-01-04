@@ -19,8 +19,9 @@ class Signup extends Component {
   }
 
   render() {
-    const { handleSubmit } = this.props;
-
+    const { handleSubmit, errorMessage } = this.props;
+    let error = errorMessage ? <div className="text-center login-error alert alert-danger">{errorMessage}</div>
+                : '';
     return (
       <div>
         <h2 className="text-center">Inventory Manager</h2>
@@ -38,10 +39,13 @@ class Signup extends Component {
             <label htmlFor="">Password</label>
             <Field className="form-control" autoComplete="none" name="password" type="password" component="input" />
           </div>
-          <div className="text-center text-danger login-error">{this.props.errorMessage}</div>
+          {error}
           <div className="login-btn-group">
-            <button className="btn btn-success">Sign up</button>
-            <Link className="btn btn-info" to="/signin">Back to Signin</Link>
+            <button className="btn btn-block btn-primary">Sign up!</button>
+          </div>
+          <hr/>
+          <div className="text-center">
+             <Link className="btn btn-link" to="/signin">Back to signin</Link>
           </div>
         </form>
       </div>

@@ -25,8 +25,11 @@ import './styles/index.css';
 const INITIAL_APP_STATE = {
   auth: { 
     checking: true,
+    errorMessage: localStorage.getItem('forceLogout') || ''
   }
 };
+
+localStorage.removeItem('forceLogout');
 
 const store = createStore(
   reducers,
