@@ -28,7 +28,7 @@ body {
   margin-top: 5%;
   padding-top: 2%;
   padding-bottom: 2%;
-  width: 33%;
+  width: 28%;
   background-color: white;
 }
 
@@ -301,6 +301,12 @@ textarea {
   display: flex;
   justify-content: space-around;
   align-items: center;
+}
+
+@media (max-width: 845px) {
+  .login-form {
+     width: 50%;
+  }
 }
 
 @media (max-width: 650px) {
