@@ -6,9 +6,11 @@ import { compose  } from 'redux';
 
 import * as actions from '../../actions/auth';
 
+import * as validate from '../../lib/redux-form';
+
+
 class SignupForm extends Component {
-  onSubmit = (formProps) => {
-    console.log(formProps);
+  onSubmit = formProps => {
     this.props.signup(formProps, () => {
       this.props.history.push('./');
     });
@@ -19,36 +21,49 @@ class SignupForm extends Component {
   }
 
   render() {
+    console.log(this.props)
     const { handleSubmit, errorMessage } = this.props;
     let error = errorMessage ? 
                 <div className="text-center login-error alert alert-danger">{errorMessage}</div>
                 : '';
     return (
-      <form onSubmit={handleSubmit(this.onSubmit)} className="container login-form">
+      <form onSubmit={handleSubmit(this.onSubmit)} className="was-validated container login-form">
         <h2 className="text-center">Sign up</h2>
-        <div className="form-group row">
-          <label htmlFor="">Email</label>
-          <Field className="form-control" autoComplete="none" name="email" type="text" component="input" />
-        </div>           
-        <div className="form-group row">
-          <label htmlFor="">Full Name</label>
-          <Field className="form-control" autoComplete="none" name="fullName" type="text" component="input" />
-        </div>        
-        <div className="form-group row">
-          <label htmlFor="">Password</label>
-          <Field className="form-control" autoComplete="none" name="password" type="password" component="input" />
-        </div>          
-        <div className="form-group row">
-          <label htmlFor="">Confirm Password</label>
-          <Field className="form-control" autoComplete="none" name="confirmPassword" type="password" component="input" />
-        </div>
+        <Field
+          name="email"
+          type="text"
+          component={validate.renderField}
+          label="Email"
+          validate={[validate.required, validate.email]}
+        />        
+        <Field
+          name="fullName"
+          type="text"
+          component={validate.renderField}
+          label="Full Name"
+          validate={[validate.required]}
+        />            
+        <Field
+          name="password"
+          type="password"
+          component={validate.renderField}
+          label="Password"
+          validate={[validate.required, validate.minLength(6)]}
+        />                     
+        <Field
+          name="confirmPassword"
+          type="password"
+          component={validate.renderField}
+          label="Confirm Password"
+          validate={[validate.required, validate.minLength(6), validate.comparePassword]}
+        />                
         {error}
         <div className="login-btn-group">
           <button className="btn btn-block btn-primary">Sign up!</button>
         </div>
         <hr/>
         <div className="text-center">
-           <Link className="btn btn-link" to="/signin">Back to signin</Link>
+           <Link className="btn btn-link" to="/signin">Back to Signin</Link>
         </div>
       </form>
     )

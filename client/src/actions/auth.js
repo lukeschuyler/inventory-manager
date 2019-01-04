@@ -11,6 +11,12 @@ import {
 
 // USER
 export const signup = (formProps, cb) => async dispatch => {
+  const { email, password, fullName } = formProps;
+
+  if (!(email && password && fullName)) {
+    return dispatch({ type: AUTH_ERROR, payload: 'Missing Required Fields.' });
+  }
+
   try {
     const response = await axios.post('/signup', formProps);
     let data = response && response.data;
