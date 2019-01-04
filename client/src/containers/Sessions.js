@@ -9,6 +9,8 @@ import Waste from '../components/sessions/Waste'
 
 import * as actions from '../actions/sessions';
 
+import requireAuth from '../components/high-order/requireAuth';
+
 
 class Sessions extends Component {
   componentDidMount() {
@@ -18,8 +20,6 @@ class Sessions extends Component {
   render() {
     let match = this.props.match.url
     
-    console.log(this.props)
-
     return (
       <div>
         <div className="container session-navbar">
@@ -60,4 +60,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, actions)(Sessions);
+export default connect(mapStateToProps, actions)(requireAuth(Sessions));

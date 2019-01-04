@@ -23,5 +23,6 @@ router.patch('/users', isAuthenticated, editUser);
 // auth
 router.post('/login', login);
 router.post('/signup', signup);
+router.post('/check-token', isAuthenticated, (req, res) => res.status(200).json({ message: 'success' }));
 
 module.exports = router;

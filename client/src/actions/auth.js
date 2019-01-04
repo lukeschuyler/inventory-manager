@@ -5,6 +5,7 @@ import {
   DELETE_USER, 
   SIGN_OUT,
   CLEAR_ERRORS,
+  TOKEN_CHECKED,
 } from './types';
 
 
@@ -50,6 +51,21 @@ export const signin = (formProps, cb) => async dispatch => {
     dispatch({ type: AUTH_ERROR, payload: 'There was an issue signing in. Please try again later.' });
   }
 };
+
+export const checkToken = () => async dispatch => {
+  try {
+    const response = await axios.post('/check-token');
+    let data = response && response.data;
+    if (data.message) {
+      dispatch({ type: TOKEN_CHECKED, payload: localStorage.getItem('token') })
+    }
+  } 
+  
+  // Server Error
+  catch (e) {
+    dispatch({ type: AUTH_ERROR, payload: '' });
+  }
+}
 
 export const clearErrors = () => {
   return { type: CLEAR_ERRORS, payload: '' }

@@ -27,12 +27,14 @@ app.use('/', routes);
 // NOT FOUND
 app.use((req, res, next) => {
   const err = new Error('404 Not Found');
+  console.log(err)
   err.status = 404;
   next(err);
 });
 
 // OTHER ERROR STATUSES
 app.use((err, req, res, next) => {
+  console.log(err)
   res.status(err.status || 500);
   res.json({
     message: err.message,

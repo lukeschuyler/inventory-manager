@@ -1,25 +1,30 @@
+// React/Router
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route } from 'react-router-dom';
+
+// Redux and redux-helpers
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import reduxThunk from 'redux-thunk';
 
+// Components for routes
 import App from './App';
-import Welcome from './components/Welcome';
-import Signup  from './components/auth/Signup';
-import Signin  from './components/auth/Signin';
+import Main from './containers/Main';
+import Signup  from './containers/auth/Signup';
+import Signin  from './containers/auth/Signin';
 import Sessions  from './containers/Sessions';
 
+// Reducer index
 import reducers  from './reducers';
 
-import './styles/index.css';
+// Styles
 import '../node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css'
-import 'react-redux-datatable/dist/styles.css';
+import './styles/index.css';
 
 const INITIAL_APP_STATE = {
   auth: { 
-    authenticated: localStorage.getItem('token')
+    checking: true,
   }
 };
 
@@ -33,10 +38,10 @@ ReactDOM.render(
     <Provider store={store}>
       <BrowserRouter>
         <App>
-          <Route path="/" exact component={Welcome} />
+          <Route path="/" exact component={Main} />
           <Route path="/signup" component={Signup} />
-          <Route path="/signin" component={Signin} />
           <Route path="/sessions" component={Sessions} />
+          <Route exact path="/signin" component={Signin} />
         </App>
       </BrowserRouter>
     </Provider>,

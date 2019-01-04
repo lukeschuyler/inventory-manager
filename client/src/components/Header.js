@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import * as actions from '../actions/auth';
@@ -46,7 +46,7 @@ class Header extends Component {
       <Navbar inverse className="app-nav">
         <Navbar.Header>
           <Navbar.Brand>
-            <a href="/">Inventory Manager</a>
+            <Link to="/">Inventory Manager</Link>
           </Navbar.Brand>
         </Navbar.Header>
           <div className="right-links">

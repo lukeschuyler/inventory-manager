@@ -1,4 +1,5 @@
 import axios from 'axios';
+// import { FORCE_LOGOUT }
 
 // create our own instance of the axios client
 const client = axios.create({
@@ -15,10 +16,25 @@ const client = axios.create({
 // for backend authentication
 client.interceptors.request.use(
   config => {
-      let token = localStorage.getItem('token');
-      // tack on token to request if it exists
-      config.params = token ? { ...config.params, token } : { ...config.params };
-      return config;
+    let token = localStorage.getItem('token');
+    // tack on token to request if it exists
+    config.params = token ? { ...config.params, token } : { ...config.params };
+    return config;
+  }, 
+  error => {
+    console.log(error);
+  }
+);
+
+// Add a response interceptor that ensures we can route according to backend auth
+client.interceptors.response.use(
+  response => {
+    let data = response && response.data;
+    if (data && response.status === 401 && data.message === 'No user with that token!') {
+      localStorage.removeItem('token');
+      // window.location = '/signin';
+    }
+    return response;
   }, 
   error => {
     console.log(error);
