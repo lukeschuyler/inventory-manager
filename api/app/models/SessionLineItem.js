@@ -1,6 +1,4 @@
 const { bookshelf } = require('../db/database');
-// require('./Product');
-// require('./Session');
 
 const SessionLineItem = bookshelf.Model.extend({
   tableName: 'session_line_item',

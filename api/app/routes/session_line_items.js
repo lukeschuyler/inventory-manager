@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const router = Router();
 
-SLIController = require('../controllers/SessionLineItemController');
+const SLIController = require('../controllers/SessionLineItemController');
 
 const { 
   getAll, getAllBySession, getOne, 

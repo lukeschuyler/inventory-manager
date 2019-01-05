@@ -1,6 +1,4 @@
 const { bookshelf } = require('../db/database');
-// require('./Session');
-// require('./SessionLineItem');
 
 const Product = bookshelf.Model.extend({
   tableName: 'product',
@@ -22,17 +20,13 @@ const Product = bookshelf.Model.extend({
   getOne(id) {
     return this.forge({upc_code: id})
     .fetch()
-    .then(product => {
-      return product
-    })
+    .then(product => product)
     .catch(error => error)
   },
   getOneById(id) {
     return this.forge({id})
       .fetch()
-      .then(product => {
-        return product
-      })
+      .then(product => product)
       .catch(error => error)
   },
   addProduct(newProduct) {

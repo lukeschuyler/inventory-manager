@@ -1,5 +1,4 @@
 const { bookshelf } = require('../db/database');
-// require('./User');
 
 const UserToken = bookshelf.Model.extend({
   tableName: 'user_token',

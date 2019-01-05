@@ -1,15 +1,7 @@
-const Product = require('../models/Product');
-
-class ProductController {
+class Controller {
 
   getAll(req, res, next) {
     Product.getAll()
-    .then(products => res.status(200).json(products))
-    .catch(error => next(error))
-  }
-
-  getAllCurrent(req, res, next) {
-    Product.getAllCurrent()
     .then(products => res.status(200).json(products))
     .catch(error => next(error))
   }
@@ -41,4 +33,4 @@ class ProductController {
   
 }
 
-module.exports = ProductController;
+module.exports = Controller;

@@ -1,11 +1,13 @@
 const { Router } = require('express');
 const router = Router();
 
+const ProductController = require('../controllers/ProductController');
+
 // Actions
 const { 
   getAll, getAllCurrent, getOne, 
   addProduct, deleteProduct, editProduct 
-} = require('../controllers/ProductController');
+} = new ProductController();
 
 // Authentication policy check
 const { isAuthenticated } = require('../helpers/auth');
