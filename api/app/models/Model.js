@@ -1,42 +1,50 @@
 const { bookshelf } = require('../db/database');
 
+class Model extends bookshelf.Model
+{
+  constructor(...args) {
+    super(...args);
+    const [ model, tableName ] = args;
+    this._model = model;
+    this._tableName = tableName;
+  }
 
-/*
- * BASE MODEL FOR APPLICATION
- * PROVIDES REUSABLE CRUD FOR ALL MODELS
- * EXTENDED FROM THIS MODEL
- */
-const Model = bookshelf.model('Model', 
-  bookshelf.Model.extend({
-    getAll() {
-      return this.forge()
-      .fetchAll()
-      .then(items => items)
-      .catch(error => error)
-    },    
-    getOne(criterion) {
-      return this.where(criterion)
-      .fetch()
-      .then(item => item)
-      .catch(error => error)
-    },
-    create(newItem) {
-      return this.forge(newItem)
-      .save()
-      .then(item => item)
-      .catch(error => error)
-    },
-    delete(id) {
-      return this.forge({id})
-      .destroy()
-      .then(item => item)
-      .catch(error => error)
-    },
-    update(criterion, edits) {
-      return this.where(criterion)
-      .save(edits, {method: 'update'})
-      .then(item => item)
-      .catch(error => error)
-    }
-  })
-);
+  get tableName() { return this._tableName; }
+
+  getAll() {
+    return this._model.forge()
+    .fetchAll()
+    .then(items => items)
+    .catch(error => error)
+  }   
+
+  getOne(criterion) {
+    return this._model.where(criterion)
+    .fetch()
+    .then(item => item)
+    .catch(error => error)
+  }
+
+  create(newItem) {
+    return this._model.forge(newItem)
+    .save()
+    .then(item => item)
+    .catch(error => error)
+  }
+
+  destroy(id) {
+    return this._model.forge({id})
+    .destroy()
+    .then(item => item)
+    .catch(error => error)
+  }
+
+  update(criterion, edits) {
+    return this._model.where(criterion)
+    .save(edits, {method: 'update'})
+    .then(item => item)
+    .catch(error => error)
+  }
+}
+
+module.exports = { Model };

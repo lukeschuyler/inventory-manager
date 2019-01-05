@@ -9,6 +9,8 @@ import * as actions from '../../actions/auth';
 // redux-form validation helper lib
 import * as validate from '../../lib/redux-form';
 
+// moved out of render method to fix redux form infinite loop issue 
+const valComparePW = [validate.required, validate.minLength(6), validate.comparePassword];
 
 class SignupForm extends Component {
   onSubmit = formProps => {
@@ -55,7 +57,7 @@ class SignupForm extends Component {
           type="password"
           component={validate.renderField}
           label="Confirm Password"
-          validate={[validate.required, validate.minLength(6), validate.comparePassword]}
+          validate={valComparePW}
         />                
         {error}
         <div className="login-btn-group">
