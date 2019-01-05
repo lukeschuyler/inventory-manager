@@ -1,7 +1,16 @@
 const bcrypt = require('bcryptjs');
 
 exports.seed = async (knex, Promise) => {
+  await knex('session_line_item').del();
+  console.log('sli')
+  await knex('session').del();
+  console.log('s')
+  await knex('session_type').del();
+  console.log('st')
+  await knex('product').del();
+  console.log('p')
   await knex('user').del();
+  console.log('u')
   return Promise.all([
     knex('user').insert({
       name: "Luke Schuyler",

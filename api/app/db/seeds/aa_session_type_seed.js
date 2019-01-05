@@ -1,5 +1,4 @@
 exports.seed = async (knex, Promise) => {
-  await knex('session_type').del();
   return Promise.all([
     knex('session_type').insert({
       title: "Sales",
