@@ -1,10 +1,14 @@
 const { Router } = require('express');
 const router = Router();
 
+SLIController = require('../controllers/SessionLineItemController');
+
 const { 
   getAll, getAllBySession, getOne, 
   addItem, deleteItem, editItem 
-} = require('../controllers/SessionLineItemController');
+} = new SLIController();
+
+console.log(getAll)
 
 const { isAuthenticated } = require('../helpers/auth');
 
