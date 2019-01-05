@@ -1,6 +1,8 @@
 const { bookshelf } = require('../db/database');
 const bcrypt = require('bcryptjs');
 
+let { to } = global.to ? global : require('await-to-js');
+
 const User = bookshelf.Model.extend({
   tableName: 'user',
   initialize: function() {

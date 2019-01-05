@@ -13,7 +13,7 @@ const Session = bookshelf.Model.extend({
 }, {
   getAll() {
     return this.forge()
-    .fetchAll({withRelated: ['products', 'user'], require: true})
+    .fetchAll({withRelated: ['products', 'user', 'session_type'], require: true})
     .then(sessions => sessions)
     .catch(error => error)
   },  
@@ -47,6 +47,6 @@ const Session = bookshelf.Model.extend({
     .then(session => session)
     .catch(error => error)
   }
-})
+});
 
 module.exports = bookshelf.model('Session', Session);
