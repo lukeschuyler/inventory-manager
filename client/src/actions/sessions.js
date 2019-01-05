@@ -7,8 +7,10 @@ import {
 
 export const fetchAllSessions = () => async dispatch => {
   let response;
+  let safetyMessage = 'There was an issue fetching sessions data.';
   try {
     response = await axios.get('/all_sessions');
+    console.log(response);
     let data = response && response.data;
 
     if (data) {
@@ -16,10 +18,10 @@ export const fetchAllSessions = () => async dispatch => {
     }
     
     // check for message
-    dispatch({ type: SESSIONS_ERROR, payload: 'There was an issue fetching sessions data.' });
+    dispatch({ type: SESSIONS_ERROR, payload: safetyMessage });
   }
 
   catch(e) {
-    dispatch({ type: SESSIONS_ERROR, payload: 'There was an issue fetching sessions data.' })
+    dispatch({ type: SESSIONS_ERROR, payload: safetyMessage })
   }
 }

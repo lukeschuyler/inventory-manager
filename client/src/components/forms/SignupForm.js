@@ -6,6 +6,7 @@ import { compose  } from 'redux';
 
 import * as actions from '../../actions/auth';
 
+// redux-form validation helper lib
 import * as validate from '../../lib/redux-form';
 
 

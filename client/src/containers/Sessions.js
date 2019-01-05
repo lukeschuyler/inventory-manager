@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Route, NavLink }  from 'react-router-dom'
+import { Route, NavLink }  from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import Sales from '../components/sessions/Sales'
-import Receiving from '../components/sessions/Receiving'
-import Inventory from '../components/sessions/Inventory'
-import Waste from '../components/sessions/Waste'
+import Sales from '../components/sessions/Sales';
+import Receiving from '../components/sessions/Receiving';
+import Inventory from '../components/sessions/Inventory';
+import Waste from '../components/sessions/Waste';
 
 import * as actions from '../actions/sessions';
 
@@ -18,7 +18,7 @@ class Sessions extends Component {
   }
 
   render() {
-    let match = this.props.match.url
+    let match = this.props.match.url;
     
     return (
       <div>
@@ -52,6 +52,7 @@ class Sessions extends Component {
 }
 
 function mapStateToProps(state) {
+  console.log(state)
   return { 
     inv: state.sessions.inv, 
     sales: state.sessions.sales, 

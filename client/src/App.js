@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import * as actions from './actions/auth';
 
-import Header from './components/Header';
+import Header from './containers/Header';
 
 const Loading = () => <div id="Loading"><h1 className="text-center">Loading...</h1></div>
 

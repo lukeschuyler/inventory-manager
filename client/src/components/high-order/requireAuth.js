@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
  *  HIGH ORDER FUNCTION
  *  requires authentication for component passed to this component
  */
-export default ChildComponent => {
+export default Child => {
 
   // BEGIN CLASS INSIDE 
   class ComposedComponent extends Component {
@@ -25,7 +25,7 @@ export default ChildComponent => {
     }
     
     render() {
-      return <ChildComponent {...this.props} />;
+      return <Child {...this.props} />;
     }
   }
 
