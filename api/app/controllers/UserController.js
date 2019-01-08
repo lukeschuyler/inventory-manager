@@ -82,6 +82,9 @@ module.exports.signup = async ({ body }, res, next) => {
   });
 }
 
+/*
+ * LOGIN
+ */
 module.exports.getAll = (req, res, next) => {
   User.getAll()
   .then(users => res.status(200).json(users))
