@@ -1,5 +1,6 @@
 // Users
 export const AUTH_USER = 'AUTH_USER';
+export const AUTH_SUBMIT = 'AUTH_SUBMIT';
 export const AUTH_ERROR = 'AUTH_ERROR';
 export const GET_USERS = 'GET_USERS';
 export const DELETE_USER = 'DELETE_USER';

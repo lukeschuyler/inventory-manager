@@ -17,7 +17,6 @@ export const fetchAllSessions = () => async dispatch => {
       dispatch({ type: FETCH_ALL_SESSIONS, payload: data });
     }
     
-    // check for message
     dispatch({ type: SESSIONS_ERROR, payload: safetyMessage });
   }
 

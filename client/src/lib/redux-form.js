@@ -20,8 +20,6 @@ export const email = value =>
     : undefined;
 
 export const comparePassword = (value, allValues) => {
-  console.log(allValues)
-  console.log(value)
   return allValues.password !== value ? 'Passwords do not match' : undefined;
 }
 

@@ -1,5 +1,6 @@
 import axios from '../lib/axios';
 import { 
+  AUTH_SUBMIT,
   AUTH_USER, 
   AUTH_ERROR, 
   DELETE_USER, 
@@ -8,9 +9,10 @@ import {
   TOKEN_CHECKED,
 } from './types';
 
-
 // USER
 export const signup = (formProps, cb) => async dispatch => {
+  dispatch({ type: AUTH_SUBMIT, payload: true });
+
   const { email, password, fullName } = formProps;
 
   if (!(email && password && fullName)) {
@@ -37,6 +39,10 @@ export const signup = (formProps, cb) => async dispatch => {
 };
 
 export const signin = (formProps, cb) => async dispatch => {
+  dispatch({ type: AUTH_SUBMIT, payload: true });
+  
+  await sleep();
+
   try {
     const response = await axios.post('/login', formProps);
     let data = response && response.data;
@@ -86,3 +92,12 @@ export const signout = cb => dispatch => {
   dispatch({ type: SIGN_OUT, payload: false });
   cb();
 };
+
+
+const sleep = function () {
+  return new Promise((res, rej) => {
+    setTimeout(function() {
+      res();
+    }, 1500)
+  });
+}

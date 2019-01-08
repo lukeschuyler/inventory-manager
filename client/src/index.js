@@ -23,6 +23,14 @@ import reducers  from './reducers';
 import '../node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css'
 import './styles/index.css';
 
+// Font Awesome TODO Figure out module bug
+// import { library }  from '@fortawesome/fontawesome-svg-core';
+// import { far } from '@fortawesome/free-regular-svg-icons';
+// import { fas } from '@fortawesome/free-solid-svg-icons';
+
+// library.add(far, fas);
+
+
 const INITIAL_APP_STATE = {
   auth: { 
     checking: true,

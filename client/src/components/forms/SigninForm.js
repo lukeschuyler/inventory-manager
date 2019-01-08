@@ -21,7 +21,10 @@ class SigninForm extends Component {
   }
 
   render() {
-    const { handleSubmit, errorMessage } = this.props;
+    const { handleSubmit, errorMessage, inProgress } = this.props;
+    let button = inProgress ?
+                <button disabled className="btn btn-block btn-primary">Submitting...</button> :
+                <button className="btn btn-block btn-primary">Sign in</button>;
     let error = errorMessage ? 
                 <div className="text-center login-error alert alert-danger">{errorMessage}</div>
                 : '';
@@ -44,7 +47,7 @@ class SigninForm extends Component {
         />           
         {error}
         <div className="login-btn-group">
-          <button className="btn btn-block btn-primary">Sign in</button>
+          {button}
         </div>
         <hr/>
         <div className="text-center">
@@ -56,7 +59,7 @@ class SigninForm extends Component {
 }
 
 function mapStateToProps({ auth }) {
-  return { errorMessage: auth.errorMessage }
+  return { errorMessage: auth.errorMessage, inProgress: auth.inProgress }
 }
 
 export default compose(

@@ -52,7 +52,6 @@ class Sessions extends Component {
 }
 
 function mapStateToProps(state) {
-  console.log(state)
   return { 
     inv: state.sessions.inv, 
     sales: state.sessions.sales, 
