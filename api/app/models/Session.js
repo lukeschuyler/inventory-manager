@@ -14,9 +14,7 @@ class Session extends bookshelf.Model {
   
   // UNIQUE
   static async getAllByType(criteria) {
-    console.log(criteria);
     let [ err, sessions ] = await to(this.where(criteria).fetchAll({withRelated: ['products', 'user'], require: true}));
-    console.log(err)
     if (err) return err;
     return sessions;
   }
@@ -47,9 +45,7 @@ class Session extends bookshelf.Model {
   }
 
   static async update(id, edits) {
-    console.log(edits);
     let [ err, item ] = await to(this.where(id).save(edits, {method: 'update'}));
-    console.log(item);
     if (err) return err;
     return item;
   }

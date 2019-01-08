@@ -22,26 +22,32 @@ class SessionController extends Controller {
     return res.status(200).json(sessions);
   }
   
-  async getAllByTypeCommon(type_id, req, res, next) {
-    let [ err, sessions ] = await to(Session.getAllByType({ session_type_id: type_id }));
+  async getAllByTypeCommon(title, req, res, next) {
+    // TODO : Move this logic to Session Type model 
+    let err, type, sessions;
+    [ err, type ] = await to(SessionType.forge({title}).fetch());
+    if (err) return err;
+    let typeId = type && type.id;
+
+    [ err, sessions ] = await to(Session.getAllByType({ session_type_id: typeId }));
     if (err) return err;
     return res.status(200).json(sessions);
   }
   
   getSales(req, res, next) {
-    return this.getAllByTypeCommon(5, req, res, next);
+    return this.getAllByTypeCommon('Sales', req, res, next);
   }
 
   getInventory(req, res, next) {
-    return this.getAllByTypeCommon(6, req, res, next);
+    return this.getAllByTypeCommon('Inventory', req, res, next);
   }
 
   getWaste(req, res, next) {
-    return this.getAllByTypeCommon(7, req, res, next);
+    return this.getAllByTypeCommon('Waste', req, res, next);
   }
 
   getReceiving(req, res, next) {
-    return this.getAllByTypeCommon(8, req, res, next);
+    return this.getAllByTypeCommon('Receiving', req, res, next);
   }
 
   sortSessions(sessions) {
