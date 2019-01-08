@@ -1,14 +1,13 @@
 const { bookshelf } = require('../db/database');
 
-const SessionType = bookshelf.Model.extend({
-  tableName: 'session_type',
-}, {
-  getAll(criteria) {
-    return this.forge(criteria)
-    .fetchAll()
-    .then(types => types)
-    .catch(error => error)
-  },
-})
+class SessionType extends bookshelf.Model {
+  get tableName() { return 'session_type'; }
+
+  static async getAll() {
+    let [ err, types ] = await to (this.forge().fetchAll());
+    if (err) return err;
+    return types;
+  }
+}
 
 module.exports = bookshelf.model('SessionType', SessionType);

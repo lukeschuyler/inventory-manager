@@ -3,54 +3,87 @@ const bcrypt = require('bcryptjs');
 
 let { to } = global.to ? global : require('await-to-js');
 
-const User = bookshelf.Model.extend({
-  tableName: 'user',
-  initialize: function() {
+// USER MODEL
+class User extends bookshelf.Model {
+  get tableName() { return 'user'; }
+
+  /*
+   * INITIALIZE
+   * INIT LISTENERS HERE
+   */
+  static initialize() {
     this.on('creating', this.hashPassword, this);
-  },
-  hashPassword: async function(model, attrs, options) {
+  }
+
+  /*
+   * Hash password
+   * @param  str { pw }   
+   * @param  str { hash }
+   * hash users password as hook on model
+   */
+  static async hashPassword(model, attrs, options) {
     let hash = await hashPassword(model);
     return hash;
-  },
-}, {
-  async getAll() {
-    let [ err, users ] = await to(this.forge().fetchAll());
-    if (err) return err;
-    return users;
-  },
-  async getOne(id) {
-    let [ err, user ] = await to(this.forge({id}).fetch());
-    if (err) return err;
-    return user;
-  },  
-  async getOneByEmail(email) {
+  }
+
+  /*
+   * Compare password
+   * @param  str { pw }   
+   * @param  str { hash }
+   */
+  static async comparePassword(pw, hash) {
+    let match = await compare(pw, hash);
+    if (!match) throw new Error('Passwords do not match!');
+    return match;
+  }
+
+  /*
+   * GET USER BY EMAIL
+   * @param  str { email }
+   */
+  static async getOneByEmail(email) {
     let [ err, user ] = await to(this.forge({email}).fetch());
     if (err) return err;
     return user;
-  },
-  async addUser(newUser) {
+  }
+  
+  /*
+   * CRUD
+   */
+  static async getAll() {
+    let [ err, users ] = await to(this.forge().fetchAll());
+    if (err) return err;
+    return users;
+  }
+
+  static async getOne(criteria) {
+    let [ err, user ] = await to(this.forge(criteria).fetch());
+    if (err) return err;
+    return user;
+  }
+
+  static async create(newUser) {
     let [ err, user ] = await to(this.forge(newUser).save());
     if (err) return err;
     return user;
-  },
-  async deleteItem(id) {
+  }
+
+  static async destroy(id) {
     let [ err, user ] = await to(this.forge({id}).destroy());
     if (err) return err;
     return user;
-  },
-  async editItem(id, edits) {
+  }
+
+  static async update(id, edits) {
     let [ err, user ] = await to(this.where({id}).save(edits, {method: 'update'}));
     if (err) return err;
     return user;
-  },
-  async comparePassword(pw, hash) {
-    let match = await compare(pw, hash);
-    if (!match) throw new Error('Passwords do not match!');
+  }
 
-    return match;
-  },
-});
+}
 
+
+// HELPERS
 function compare(pw, hash) { 
   return new Promise((resolve, reject) => {
     bcrypt.compare(pw, hash, (err, res) => {

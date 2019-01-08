@@ -5,20 +5,23 @@ class Session extends bookshelf.Model {
 
   get tableName() { return 'session'; }
   get dependents() { return ['session']; }
-
+  
+  // RELATIONS
   products() { return this.belongsToMany('Product').through('SessionLineItem'); }
   user() { return this.belongsTo('User'); }
   session_type() { return this.belongsTo('SessionType'); }
   items() { return this.hasMany('SessionLineItem'); }
-
-  static async getAll() {
-    let [ err, sessions ] = await to(this.forge().fetchAll({withRelated: ['products', 'user', 'session_type'], require: true}));
+  
+  // UNIQUE
+  static async getAllByType(criteria) {
+    let [ err, sessions ] = await to(this.where(criteria).fetchAll({withRelated: ['products', 'user'], require: true}));
     if (err) return err;
     return sessions;
   }
 
-  static async getAllByType(criteria) {
-    let [ err, sessions ] = await to(this.where(criteria).fetchAll({withRelated: ['products', 'user'], require: true}));
+  // CRUD
+  static async getAll() {
+    let [ err, sessions ] = await to(this.forge().fetchAll({withRelated: ['products', 'user', 'session_type'], require: true}));
     if (err) return err;
     return sessions;
   }
@@ -42,9 +45,7 @@ class Session extends bookshelf.Model {
   }
 
   static async update(id, edits) {
-    console.log(edits)
     let [ err, items ] = await to(this.where(id).save(edits, {method: 'update'}));
-    console.log(err)
     if (err) return err;
     return items;
   }

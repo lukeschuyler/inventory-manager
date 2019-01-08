@@ -1,5 +1,7 @@
 const amazon = require('amazon-product-api');
 
+// ********** DEPRECATED ***********
+
 var client = amazon.createClient({
   awsId: process.env.API_KEY,
   awsSecret: process.env.API_SECRET,

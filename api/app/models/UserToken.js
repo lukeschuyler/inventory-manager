@@ -1,27 +1,26 @@
 const { bookshelf } = require('../db/database');
 
-const UserToken = bookshelf.Model.extend({
-  tableName: 'user_token',
-  user: function() { return this.belongsTo('User') },
-}, {
-  getOne(token) {
-    return this.forge({ token })
-    .fetch({withRelated: ['user'], require: true})
-    .then(token => token)
-    .catch(error => error)
-  },
-  create(token, userId) {
-    return this.forge({token, user_id: userId})
-    .save()
-    .then(token => token)
-    .catch(error => error)
-  },
-  destroy(userId) {
-    return this.forge({ user_id: userId })
-    .destroy()
-    .then(token => token)
-    .catch(error => error)
+class UserToken extends bookshelf.Model {
+  get tableName() { return 'user_token'; }
+  
+  async getOne(token) {
+    let [ err, userToken ] = await to(this.forge({ token }).fetch({withRelated: ['user'], require: true}));
+    if (err) return err;
+    return userToken;
   }
-});
+
+  async create(token, userId) {
+    let [ err, userToken ] = await to(this.forge({token, user_id: userId}).save());
+    if (err) return err;
+    return userToken;
+  }
+
+  async destroy(userId) {
+    let [ err, userToken ] = await to(this.forge({ user_id: userId }).destroy());
+    if (err) return err;
+    return userToken;
+  }
+
+}
 
 module.exports = bookshelf.model('UserToken', UserToken);

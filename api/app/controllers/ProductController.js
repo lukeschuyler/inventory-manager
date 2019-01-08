@@ -1,20 +1,25 @@
 const Product = require('../models/Product');
 const Controller = require('./Controller');
 
+/*
+ * ProductController
+ */
+ 
 class ProductController extends Controller {
   constructor() {
     super(Product);
   }
-  getAllCurrent(req, res, next) {
-    Product.getAllCurrent()
-    .then(products => res.status(200).json(products))
-    .catch(error => next(error))
+
+  async getAllCurrent(req, res, next) {
+    let [ err, products ] = await to(Product.getAllCurrent());
+    if (err) return err;
+    return res.status(200).json(products);
   }
 
-  deleteProduct({params: {id} }, res, next) {
-    Product.deleteProduct(id)
-    .then(product => res.status(202).json(product))
-    .catch(error => next(error))
+  async deactivateProduct({params: {id} }, res, next) {
+    let [ err, product ] = await to(Product.deactivateProduct(id));
+    if (err) return err;
+    return res.status(200).json(products);
   }
 }
 

@@ -5,11 +5,13 @@ class Product extends bookshelf.Model {
 
   get tableName() { return 'product'; }
   get dependents() { return ['session'] }
-
+  
+  // relation
   session() { 
     return this.belongsToMany('Session').through('SessionLineItem');
   }
-
+  
+  // UNIQUE
   static async getAllCurrent() {
     let [ err, products ] = await to(this.where({active: 'y'}).fetchAll());
     if (err) return err;
@@ -22,13 +24,14 @@ class Product extends bookshelf.Model {
     return product;
   }
 
-  static async deleteProduct(id) {
+  static async deactivateProduct(id) {
     let [ err, product ] = await to(this.where({id}).save({active: 'n'}, {method: 'update'}));
     if (err) return err;
     return product;
   }
-
-  static async getAll() {
+  
+  // CRUD
+  static async getAll() { 
     let [ err, items ] = await to(this.forge().fetchAll());
     if (err) return err;
     return items;
