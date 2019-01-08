@@ -1,20 +1,22 @@
 const { Router } = require('express');
 const router = Router();
 
+const SessionController = require('../controllers/SessionController');
+
 // Actions
 const { 
-  getInventory, getWaste, getReceiving, getSales, getAllByType,
-  getOne, addSession, deleteSession, editSession, getAll
-} = require('../controllers/SessionController');
+  getInventory, getWaste, getReceiving, getSales,
+  getOne, create, destroy, update, getAll
+} = new SessionController();
 
 // Authentication policy check
 const { isAuthenticated } = require('../helpers/auth');
 
 // All Sessions (General)
 router.get('/all_sessions', isAuthenticated, getAll);
-router.post('/sessions', isAuthenticated, addSession);
-router.delete('/sessions/:id', isAuthenticated, deleteSession);
-router.patch('/sessions', isAuthenticated, editSession);
+router.post('/sessions', isAuthenticated, create);
+router.delete('/sessions/:id', isAuthenticated, destroy);
+router.patch('/sessions', isAuthenticated, update);
 
 // Inventory
 router.get('/inv_sessions', isAuthenticated, getInventory);

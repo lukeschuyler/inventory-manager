@@ -2,37 +2,36 @@ const Session = require('../models/Session');
 const SessionType = require('../models/SessionType');
 const Controller = require('./Controller');
 
+
 class SessionController extends Controller {
 
   getWaste(req, res, next) {
-    Session.getAllByType({ session_type_id: 3 })
-    .then(sessions => res.status(200).json(sessions))
-    .catch(error => next(error))
+    return this.getAllByTypeCommon(3);
   }
 
   getSales(req, res, next) {
-    Session.getAllByType({ session_type_id: 1 })
-    .then(sessions => res.status(200).json(sessions))
-    .catch(error => next(error))
+    return this.getAllByTypeCommon(1);
   }
 
   getInventory(req, res, next) {
-    Session.getAllByType({ session_type_id: 2 })
-    .then(sessions => res.status(200).json(sessions))
-    .catch(error => next(error))
+    return this.getAllByTypeCommon(2);
   }
 
   getReceiving(req, res, next) {
-    Session.getAllByType({ session_type_id: 4 })
-    .then(sessions => res.status(200).json(sessions))
-    .catch(error => next(error))
+    return this.getAllByTypeCommon(4);
   }
 
-  getAll(req, res, next) {
-    Session.getAll()
-    .then(sessions => sortSessions(sessions.toJSON()))
-    .then(sessions => res.status(200).json(sessions))
-    .catch(error => next(error))
+  async getAll(req, res, next) {
+    let [ err, sessions ] = await to(Session.getAll());
+    if (err) return err;
+    sessions = await this.sortSessions(sessions.toJSON());
+    return res.status(200).json(sessions);
+  }
+
+  async getAllByTypeCommon(type_id) {
+    let [ err, sessions ] = await to(Session.getAllByType({ session_type_id: type_id }));
+    if (err) return err;
+    return res.status(200).json(sessions);
   }
 
   sortSessions(sessions) {
@@ -61,3 +60,5 @@ class SessionController extends Controller {
     return { waste, sales, inv, rec };
   }
 }
+
+module.exports = SessionController;
