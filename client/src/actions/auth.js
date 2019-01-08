@@ -41,8 +41,6 @@ export const signup = (formProps, cb) => async dispatch => {
 export const signin = (formProps, cb) => async dispatch => {
   dispatch({ type: AUTH_SUBMIT, payload: true });
   
-  await sleep();
-
   try {
     const response = await axios.post('/login', formProps);
     let data = response && response.data;
@@ -98,6 +96,6 @@ const sleep = function () {
   return new Promise((res, rej) => {
     setTimeout(function() {
       res();
-    }, 1500)
+    }, 500)
   });
 }
