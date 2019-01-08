@@ -1,4 +1,7 @@
 {
+  "name": "api",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
     "amazon-product-api": "^0.4.4",
     "await-to-js": "^2.1.1",

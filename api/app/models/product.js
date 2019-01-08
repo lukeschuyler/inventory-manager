@@ -1,64 +1,63 @@
 const { bookshelf } = require('../db/database');
+const { to } = global.to ? global : require('await-to-js');
 
 class Product extends bookshelf.Model {
 
   get tableName() { return 'product'; }
   get dependents() { return ['session'] }
 
-  static getAllCurrent() {
-    return this.where({active: 'y'})
-    .fetchAll()
-    .then(products => products)
-    .catch(error => error)
+  session() { 
+    return this.belongsToMany('Session').through('SessionLineItem');
   }
 
-  static getOneById(id) {
-    return this.forge({id})
-      .fetch()
-      .then(product => product)
-      .catch(error => error)
+  static async getAllCurrent() {
+    let [ err, products ] = await to(this.where({active: 'y'}).fetchAll());
+    if (err) return err;
+    return products;
   }
 
-  static deleteProduct(id) {
-    return this.where({id})
-    .save({active: 'n'}, {method: 'update'})
-    .then(product => product)
-    .catch(error => error)
+  static async getOneById(id) {
+    let [ err, product ] = await to(this.forge({id}).fetch());
+    if (err) return err;
+    return product;
   }
 
-  static getAll() {
-    return this.forge()
-    .fetchAll()
-    .then(items => items)
-    .catch(error => error)
+  static async deleteProduct(id) {
+    let [ err, product ] = await to(this.where({id}).save({active: 'n'}, {method: 'update'}));
+    if (err) return err;
+    return product;
+  }
+
+  static async getAll() {
+    let [ err, items ] = await to(this.forge().fetchAll());
+    if (err) return err;
+    return items;
   }   
 
-  static getOne(criterion) {
-    return this.where(criterion)
-    .fetch()
-    .then(item => item)
-    .catch(error => error)
+  static async getOne(id) {
+    let [ err, item ] = await to(this.forge({id}).fetch());
+    if (err) return err;
+    return item;
   }
 
-  static create(newItem) {
-    return this.forge(newItem)
-    .save()
-    .then(item => item)
-    .catch(error => error)
+  static async create(newItem) {
+    let [ err, item ] = await to(this.forge(newItem).save());
+    if (err) return err;
+    return item;
   }
 
-  static destroy(id) {
-    return this.forge({id})
-    .destroy()
-    .then(item => item)
-    .catch(error => error)
+  static async destroy(id) {
+    let [ err, item ] = await to(this.forge({id}).destroy());
+    if (err) return err;
+    return item;
   }
 
-  static update(criterion, edits) {
-    return this.where(criterion)
-    .save(edits, {method: 'update'})
-    .then(item => item)
-    .catch(error => error)
+  static async update(id, edits) {
+    console.log(edits)
+    let [ err, items ] = await to(this.where(id).save(edits, {method: 'update'}));
+    console.log(err)
+    if (err) return err;
+    return items;
   }
 }
 

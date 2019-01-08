@@ -1,65 +1,52 @@
 const { bookshelf } = require('../db/database');
 
-const SessionLineItem = bookshelf.Model.extend({
-  tableName: 'session_line_item',
-  product: function() { return this.belongsTo('Product') },
-  session: function() { return this.belongsTo('Session') }
-}, {
-  async getAll() {
-    try {
-      let items = await this.forge().fetchAll({ withRelated: ['product', 'session'], require: true });
-      return items;
-    }
-    catch(e) {
-      return e;
-    }
-  },
-  async getAllBySession(inventory_session_id) {
-    try {
-      let items = await this.where({inventory_session_id})
-                  .fetchAll({withRelated: ['product']})
-      return items;
-    }
-    catch(e) {
-      return e;
-    }
-  },
-  async getOne(id) {
-    try {
-      let item = await this.forge({id}).fetch();
-      return item;
-    }
-    catch(e) {
-      return e;
-    }
-  },
-  async addItem(newItem) {
-    try {
-      let item = await this.forge(newItem).save();
-      return item;
-    }
-    catch(e) {
-      return e;
-    }
-  },
-  async deleteItem(id) {
-    try {
-      let item = await this.forge({id}).destroy();
-      return item;
-    }
-    catch(e) {
-      return e;
-    }
-  },
-  async editItem(id, edits) {
-    try {
-      let item = await this.where({id}).save(edits, {method: 'update'});
-      return item;
-    }
-    catch(e) {
-      return e;
-    }
+class SessionLineItem extends bookshelf.Model {
+  get tableName() { return 'session_line_item'; }
+
+  session() { 
+    return this.belongsTo('Session');
   }
-})
+
+  product() { 
+    return this.belongsTo('Product');
+  }
+
+  static async getAll() {
+    let [ err, items ] = await to(this.forge().fetchAll({ withRelated: ['product', 'session'], require: true }));
+    if (err) return err;
+    return items;
+  }
+
+  static async getAllBySession(inventory_session_id) {
+    let [ err, items ] = await to(this.where({inventory_session_id})
+                              .fetchAll({withRelated: ['product']}));
+    if (err) return err;
+    return items;
+  }
+
+  static async getOne(id) {
+    let [ err, item ] = await to(this.forge({id}).fetch());
+    if (err) return err;
+    return item;
+  }
+
+  static async addItem(newItem) {
+    let [ err, item ] = await to(this.forge(newItem).save());
+    if (err) return err;
+    return item;
+  }
+
+  static async deleteItem(id) {
+    let [ err, item ] = await to(this.forge({id}).destroy());
+    if (err) return err;
+    return item;
+  }
+
+  static async editItem(id, edits) {
+    let [ err, items ] = await to(this.where({id}).save(edits, {method: 'update'}));
+    if (err) return err;
+    return items;
+  }
+}
 
 module.exports = bookshelf.model('SessionLineItem', SessionLineItem);

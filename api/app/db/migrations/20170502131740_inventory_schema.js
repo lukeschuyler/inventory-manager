@@ -2,7 +2,7 @@
 exports.up = (knex, Promise) => {
   return knex.schema
   .createTable('user', table => {
-    console.log('user')
+    console.log('Creating user table...');
     table.increments();
     table.string('name');
     table.string('email');
@@ -12,7 +12,7 @@ exports.up = (knex, Promise) => {
   })
 
   .createTable('user_token', table => {
-    console.log('token')
+    console.log('Creating token table...');
     table.increments();
     table.string('token');
     table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
@@ -20,7 +20,7 @@ exports.up = (knex, Promise) => {
   })
 
   .createTable('product', table => {
-    console.log('product')
+    console.log('Creating product table...');
     table.increments();
     table.bigInteger('upc_code').unsigned().notNullable().unique();
     table.string('name').notNullable();
@@ -35,13 +35,13 @@ exports.up = (knex, Promise) => {
   })
 
   .createTable('session_type', table => {
-    console.log('session_type')
+    console.log('Creating session_type table...');
     table.increments();
     table.string('title').notNullable();
   })
 
   .createTable('session', table => {
-    console.log('session')
+    console.log('Creating session table...');
     table.increments();
     table.timestamp('date').notNullable().defaultTo(knex.fn.now());
 
@@ -50,14 +50,16 @@ exports.up = (knex, Promise) => {
   })
 
   .createTable('session_line_item', table => {
-    console.log('session_line_item')
+    console.log('Creating session_line_item table;...')
     table.increments();
     table.decimal('quantity').notNullable();
 
     table.integer('product_id').unsigned().references('product.id');
     table.integer('session_id').unsigned().references('session.id');
-  })
+  });
 
+  console.log('Done');
+;  
 };
 
 exports.down = (knex, Promise) => knex.schema

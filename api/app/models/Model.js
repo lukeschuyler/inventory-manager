@@ -1,5 +1,7 @@
 const { bookshelf } = require('../db/database');
 
+// NOT IN USE YET
+// ATTEMPTING TO CREATE BASE DB MODEL
 class Model extends bookshelf.Model
 {
   constructor(...args) {
