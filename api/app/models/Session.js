@@ -14,14 +14,16 @@ class Session extends bookshelf.Model {
   
   // UNIQUE
   static async getAllByType(criteria) {
+    console.log(criteria);
     let [ err, sessions ] = await to(this.where(criteria).fetchAll({withRelated: ['products', 'user'], require: true}));
+    console.log(err)
     if (err) return err;
     return sessions;
   }
 
   // CRUD
   static async getAll() {
-    let [ err, sessions ] = await to(this.forge().fetchAll({withRelated: ['products', 'user', 'session_type'], require: true}));
+    let [ err, sessions ] = await to(this.forge().fetchAll({withRelated: ['products', 'user', 'session_type', 'items'], require: true}));
     if (err) return err;
     return sessions;
   }
@@ -45,9 +47,11 @@ class Session extends bookshelf.Model {
   }
 
   static async update(id, edits) {
-    let [ err, items ] = await to(this.where(id).save(edits, {method: 'update'}));
+    console.log(edits);
+    let [ err, item ] = await to(this.where(id).save(edits, {method: 'update'}));
+    console.log(item);
     if (err) return err;
-    return items;
+    return item;
   }
 }
 
