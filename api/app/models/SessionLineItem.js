@@ -1,4 +1,5 @@
 const { bookshelf } = require('../db/database');
+let { to } = global.to ? global : require('await-to-js');
 
 class SessionLineItem extends bookshelf.Model {
   get tableName() { return 'session_line_item'; }

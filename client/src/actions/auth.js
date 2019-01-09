@@ -90,12 +90,3 @@ export const signout = cb => dispatch => {
   dispatch({ type: SIGN_OUT, payload: false });
   cb();
 };
-
-
-const sleep = function () {
-  return new Promise((res, rej) => {
-    setTimeout(function() {
-      res();
-    }, 500)
-  });
-}

@@ -5,7 +5,6 @@ const Controller = require('./Controller');
 /*
  * SessionController
  */
-
 class SessionController extends Controller {
   constructor() {
     super(Session);
@@ -15,13 +14,20 @@ class SessionController extends Controller {
     this.getWaste =  this.getWaste.bind(this);
   }
 
+  /*
+   * Get all sessions, sorted into type arrays
+   */
   async getAll(req, res, next) {
     let [ err, sessions ] = await to(Session.getAll());
     if (err) return err;
-    sessions = await this.sortSessions(sessions.toJSON());
-    return res.status(200).json(sessions);
+    // console.log(sessions.toJSON());
+    sortedSessions = await this.sortSessions(sessions.toJSON());
+    return res.status(200).json(sortedSessions);
   }
   
+  /*
+   * Get all sessions of one type, common functionality
+   */
   async getAllByTypeCommon(title, req, res, next) {
     // TODO : Move this logic to Session Type model 
     let err, type, sessions;
@@ -34,6 +40,10 @@ class SessionController extends Controller {
     return res.status(200).json(sessions);
   }
   
+  /*
+   * Endpoints for each session type
+   * Calls common code
+   */
   getSales(req, res, next) {
     return this.getAllByTypeCommon('Sales', req, res, next);
   }
@@ -50,13 +60,20 @@ class SessionController extends Controller {
     return this.getAllByTypeCommon('Receiving', req, res, next);
   }
 
+  /*
+   * Helper
+   * sorts sessions in four separate arrays for each type
+   * @param array { sessions } 
+   */
   sortSessions(sessions) {
     let waste = [],
         sales = [],
         inv = [],
         rec = [];
-
     for (let session of sessions) {
+      if (!session.session_type) {
+        console.log(session)
+      }
       switch(session.session_type.title) {
         case 'Sales':
           sales.push(session);

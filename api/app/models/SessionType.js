@@ -1,4 +1,5 @@
 const { bookshelf } = require('../db/database');
+let { to } = global.to ? global : require('await-to-js');
 
 class SessionType extends bookshelf.Model {
   get tableName() { return 'session_type'; }

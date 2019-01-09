@@ -1,5 +1,5 @@
 const { bookshelf } = require('../db/database');
-
+let { to } = global.to ? global : require('await-to-js');
 
 class Session extends bookshelf.Model {
 
@@ -14,20 +14,21 @@ class Session extends bookshelf.Model {
   
   // UNIQUE
   static async getAllByType(criteria) {
-    let [ err, sessions ] = await to(this.where(criteria).fetchAll({withRelated: ['products', 'user'], require: true}));
+    let [ err, sessions ] = await to(this.where(criteria).fetchAll({withRelated: ['products', 'user'], require: true }));
     if (err) return err;
     return sessions;
   }
 
   // CRUD
   static async getAll() {
-    let [ err, sessions ] = await to(this.forge().fetchAll({withRelated: ['products', 'user', 'session_type', 'items'], require: true}));
+    let [ err, sessions ] = await to(this.forge().fetchAll({withRelated: ['products', 'user', 'session_type', 'items'], require: true }));
+    // console.log(sessions.toJSON())
     if (err) return err;
     return sessions;
   }
 
   static async getOne(id) {
-    let [ err, session ] = await to(this.forge({id}).fetch({withRelated: ['products', 'user', 'items'], require: true}));
+    let [ err, session ] = await to(this.forge({id}).fetch({withRelated: ['products', 'user', 'items'], require: true }));
     if (err) return err;
     return session;
   }
