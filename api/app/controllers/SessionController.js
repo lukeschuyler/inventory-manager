@@ -21,8 +21,8 @@ class SessionController extends Controller {
     let [ err, sessions ] = await to(Session.getAll());
     if (err) return err;
     // console.log(sessions.toJSON());
-    sortedSessions = await this.sortSessions(sessions.toJSON());
-    return res.status(200).json(sortedSessions);
+    sessions = await this.sortSessions(sessions.toJSON());
+    return res.status(200).json(sessions);
   }
   
   /*
