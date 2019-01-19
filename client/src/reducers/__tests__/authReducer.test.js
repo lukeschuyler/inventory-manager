@@ -1,5 +1,4 @@
 import authReducer from '../auth';
-import sessionsReducer from '../sessions';
 
 import { 
   AUTH_USER, 

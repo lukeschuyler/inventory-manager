@@ -26,19 +26,19 @@ client.interceptors.request.use(
   }
 );
 
-// Add a response interceptor that ensures we can route according to backend auth
-client.interceptors.response.use(
-  response => {
-    let data = response && response.data;
-    if (data && response.status === 401 && data.message === 'No user with that token!') {
-      localStorage.removeItem('token');
-      localStorage.setItem('forceLogout', 'Your token is invalid, it may have expired. Please login again.');
-    }
-    return response;
-  }, 
-  error => {
-    console.log(error);
-  }
-);
+// // Add a response interceptor that ensures we can route according to backend auth
+// client.interceptors.response.use(
+//   response => {
+//     let data = typeof response === 'object' && response.data;
+//     if (data && response.status === 401 && data.message === 'No user with that token!') {
+//       localStorage.removeItem('token');
+//       localStorage.setItem('forceLogout', 'Your token is invalid, it may have expired. Please login again.');
+//     }
+//     return response;
+//   }, 
+//   error => {
+//     console.log(error);
+//   }
+// );
 
 export default client;

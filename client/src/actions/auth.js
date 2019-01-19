@@ -10,7 +10,7 @@ import {
 } from './types';
 
 // USER
-export const signup = (formProps, cb) => async dispatch => {
+export const signup = (formProps = {}, cb) => async dispatch => {
   dispatch({ type: AUTH_SUBMIT, payload: true });
 
   const { email, password, fullName } = formProps;
@@ -24,36 +24,40 @@ export const signup = (formProps, cb) => async dispatch => {
     let data = response && response.data;
 
     // token will set information and redirect
-    if (data.token) {
+    if (data && data.token) {
       dispatch({ type: AUTH_USER, payload: data });
       localStorage.setItem('token', data.token);
       return cb();
     }
-
     // check for message
-    dispatch({ type: AUTH_ERROR, payload: data.message || 'No user matches these credentials.' });
+    dispatch({ type: AUTH_ERROR, payload: (data && data.message) || 'No user matches these credentials.' });
   } catch (e) {
-    console.log(e)
     dispatch({ type: AUTH_ERROR, payload: 'There was an issue signing up. Please try again later.' });
   }
 };
 
-export const signin = (formProps, cb) => async dispatch => {
+export const signin = (formProps = {}, cb) => async dispatch => {
   dispatch({ type: AUTH_SUBMIT, payload: true });
   
+  const { email, password } = formProps;
+
+  if (!(email && password)) {
+    return dispatch({ type: AUTH_ERROR, payload: 'Missing Required Fields.' });
+  }
+
   try {
     const response = await axios.post('/login', formProps);
     let data = response && response.data;
     
     // token will set information and redirect
-    if (data.token) {
+    if (data && data.token) {
       dispatch({ type: AUTH_USER, payload: data });
       localStorage.setItem('token', data.token);
       return cb();
     }
     
     // check for message
-    dispatch({ type: AUTH_ERROR, payload: data.message || 'No user matches these credentials.' });
+    dispatch({ type: AUTH_ERROR, payload: (data && data.message) || 'No user matches these credentials.' });
   } 
   
   // Server Error
@@ -66,9 +70,12 @@ export const checkToken = () => async dispatch => {
   try {
     const response = await axios.post('/check-token');
     let data = response && response.data;
-    if (data.message) {
-      dispatch({ type: TOKEN_CHECKED, payload: localStorage.getItem('token') })
+    console.log(data)
+    if (data && data.message) {
+      return dispatch({ type: TOKEN_CHECKED, payload: localStorage.getItem('token') })
     }
+
+    dispatch({ type: AUTH_ERROR, payload: '' });
   } 
   
   // Server Error
@@ -79,10 +86,6 @@ export const checkToken = () => async dispatch => {
 
 export const clearErrors = () => {
   return { type: CLEAR_ERRORS, payload: '' }
-}
-
-export const deleteUser = id => {
-  return { type: DELETE_USER, payload: id }
 }
 
 export const signout = cb => dispatch => {
