@@ -5,7 +5,7 @@
   "dependencies": {
     "amazon-product-api": "^0.4.4",
     "await-to-js": "^2.1.1",
-    "bcrypt": "^3.0.3",
+    "bcrypt": "^5.0.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "*",
     "bookshelf": "^0.14.2",
